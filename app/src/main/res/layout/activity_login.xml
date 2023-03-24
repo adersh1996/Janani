@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:paddingBottom="30dp"
+    tools:context=".LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:paddingBottom="30dp">
+
+
+        <TextView
+            android:id="@+id/tv_login_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="150dp"
+            android:text="@string/button_login"
+            android:textColor="@color/heading_color"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignBottom="@id/tv_login_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/tv_login_title"
+            android:background="@color/heading_color" />
+
+        <EditText
+            android:id="@+id/et_phone_number"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tv_login_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/view_background"
+            android:drawableLeft="@drawable/baseline_local_phone_24"
+            android:drawablePadding="10dp"
+            android:hint="@string/prompt_phone_number"
+            android:inputType="phone"
+            android:paddingLeft="20dp"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/et_phone_number"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/view_background"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="10dp"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_account_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_account_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_password"
+                android:text="@string/account_switch_query"
+                android:textColor="@color/text_color"
+                android:textSize="20sp" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/sw_account_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_password"
+                android:layout_alignTop="@id/tv_account_switch"
+                android:layout_alignBottom="@id/tv_account_switch"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/tv_account_switch" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_login_button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_account_switch"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_view_background"
+            android:text="@string/button_login"
+            android:textColor="@color/button_text_color"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_section_break"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bt_login_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp">
+
+            <View
+                android:layout_width="190dp"
+                android:layout_height="2dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@color/heading_color" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="or"
+                android:textSize="25sp" />
+
+            <View
+                android:layout_width="190dp"
+                android:layout_height="2dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@color/heading_color" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_register_section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_section_break"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_sign_in_query"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/prompt_register"
+                android:textColor="@color/text_color"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_sign_in_query"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tv_sign_in_query"
+                android:paddingRight="15dp"
+                android:text="@string/text_register"
+                android:textColor="@color/text_color"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_register_section"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingBottom="30dp">
+
+            <TextView
+                android:id="@+id/tv_seller_switch_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/account_switch_button_background"
+                android:text="@string/button_seller_reg_switch"
+                android:textColor="@color/button_text_color"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:id="@+id/tv_user_switch_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/account_switch_button_background"
+                android:layout_marginBottom="5dp"
+                android:text="@string/button_user_reg_switch"
+                android:textColor="@color/button_text_color"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
