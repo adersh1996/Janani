@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@color/background_color"
     tools:context=".UserRegistration">
 
@@ -193,7 +194,8 @@
             android:text="@string/button_register"
             android:textColor="@color/button_text_color"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginBottom="100dp"/>
     </RelativeLayout>
 
 
