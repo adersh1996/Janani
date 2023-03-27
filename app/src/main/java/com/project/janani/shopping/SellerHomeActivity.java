@@ -15,92 +15,94 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class SellerHomeActivity extends AppCompatActivity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
-    private DrawerLayout drawerLayout;
-    private ListView drawerList;
-    private String[] drawerItems;
-    private ActionBarDrawerToggle drawerToggle;
+public class SellerHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    public DrawerLayout drawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+    public NavigationView navigationView;
+    public BottomNavigationView bottomNavigationView;
+    SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
+    SellerOrderFragment sellerOrderFragment = new SellerOrderFragment();
+    SellerHistoryFragment sellerHistoryFragment = new SellerHistoryFragment();
+    SllerAccountFragment sellarAccountFragment = new SllerAccountFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_home);
+        // drawer layout instance to toggle the menu icon to open
+        // drawer and back button to close drawer
+        drawerLayout = findViewById(R.id.my_drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        drawerList = findViewById(R.id.left_drawer);
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        // pass the Open and Close toggle for the drawer layout listener
+        // to toggle the button
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
-        drawerItems = getResources().getStringArray(R.array.drawer_items);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellerHomeFragment).commit();
 
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, drawerItems));
-        drawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        drawerToggle = new ActionBarDrawerToggle(
-                this,
-                drawerLayout,
-                R.string.drawer_open,
-                R.string.drawer_close
-        ) {
-            public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle("Janani");
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle("Janani");
-                invalidateOptionsMenu();
-            }
-        };
-        drawerToggle.syncState();
-        drawerLayout.addDrawerListener(drawerToggle);
-
+        }
+        // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+
 
     }
 
+    // override the onOptionsItemSelected()
+    // function to implement
+    // the item click listener callback
+    // to open and close the navigation
+    // drawer when the icon is clicked
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
+
+
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            Fragment fragment = null;
-            switch (position) {
-                case 0:
-                    fragment = new SellerHomeFragment();
-                    break;
-                case 1:
-                    fragment = new SellerOrderFragment();
-                    break;
-                case 2:
-                    fragment = new SellerHistoryFragment();
-                    break;
-                case 3:
-                    fragment = new SllerAccountFragment();
-                    break;
-                default:
-                    break;
-            }
-            if (fragment != null) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, fragment)
-                        .commit();
-
-                drawerList.setItemChecked(position, true);
-                drawerList.setSelection(position);
-                setTitle(drawerItems[position]);
-                drawerLayout.closeDrawer(drawerList);
-            }
+    public void closeDrawer() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
 
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.sell_home_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellerHomeFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.sell_order_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellerOrderFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.sell_history_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellerHistoryFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.sell_account_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellarAccountFragment).commit();
+                closeDrawer();
+                return true;
+        }
+        return false;
     }
 }

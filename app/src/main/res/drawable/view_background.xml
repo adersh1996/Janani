@@ -3,6 +3,6 @@
 
 
     <corners android:radius="60dp" />
-    <solid android:color="@color/material_on_surface_disabled"/>
+    <solid android:color="@color/material_on_surface_disabled" />
 
 </shape>
