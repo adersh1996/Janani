@@ -58,9 +58,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!swAccountSwitch.isChecked()) {
+                    Intent userIntent = new Intent(LoginActivity.this, UserHomeActivity.class);
+                    startActivity(userIntent);
                     Toast.makeText(LoginActivity.this, "Login in as User", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent sellerIntent = new Intent(LoginActivity.this,SellerHomeActivity.class);
+                    Intent sellerIntent = new Intent(LoginActivity.this, SellerHomeActivity.class);
                     startActivity(sellerIntent);
                     Toast.makeText(LoginActivity.this, "Login in as Seller", Toast.LENGTH_SHORT).show();
 
