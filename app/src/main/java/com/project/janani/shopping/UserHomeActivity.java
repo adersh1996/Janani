@@ -1,0 +1,95 @@
+package com.project.janani.shopping;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+
+public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public DrawerLayout userDrawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+    public NavigationView userNavigationView;
+    public BottomNavigationView bottomNavigationView;
+    UserHomeFragment userHomeFragment = new UserHomeFragment();
+    UserOrderFragment userOrderFragment = new UserOrderFragment();
+    UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
+    UserAccountFragment userAccountFragment = new UserAccountFragment();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_user_home);
+
+        // drawer layout instance to toggle the menu icon to open
+        // drawer and back button to close drawer
+        userDrawerLayout = findViewById(R.id.my_drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, userDrawerLayout, R.string.nav_open, R.string.nav_close);
+
+        userNavigationView = findViewById(R.id.nav_view);
+        userNavigationView.setNavigationItemSelectedListener(this);
+        // pass the Open and Close toggle for the drawer layout listener
+        // to toggle the button
+        userDrawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userHomeFragment).commit();
+
+        }
+        // to make the Navigation drawer icon always appear on the action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+
+    }
+
+    public void closeDrawer() {
+        if (userDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            userDrawerLayout.closeDrawer(GravityCompat.START);
+
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+
+        switch (item.getItemId()) {
+            case R.id.sell_home_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userHomeFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.sell_order_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userOrderFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.sell_history_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userHistoryFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.sell_account_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userAccountFragment).commit();
+                closeDrawer();
+                return true;
+        }
+        return false;
+    }
+}

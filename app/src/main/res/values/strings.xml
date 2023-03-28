@@ -8,6 +8,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
+
     <string name="prompt_phone_number">Enter Your Phone Number</string>
     <string name="prompt_password">Enter The Password</string>
     <string name="account_switch_query">Login as a seller :</string>
@@ -16,12 +17,14 @@
     <string name="button_register">Register</string>
     <string name="text_register">Register as</string>
 
+
     <string name="button_save">Save</string>
     <string name="prompt_age">Enter your age</string>
     <string name="prompt_register">Do not have an account ?</string>
     <string name="prompt_user_name">Enter your name </string>
     <string name="prompt_email">Enter your Email ID</string>
     <string name="prompt_confirm_password">Re-enter your password</string>
+
 
     <string name="IFSC_code">Enter IFSC code</string>
     <string name="bank_details_heading">Bank Details</string>
@@ -34,6 +37,7 @@
     <string name="description_user_kit">By checking this option , you agree to deliver some selected items within 1 hour from the time of ordering.</string>
     <string name="button_seller_reg_switch">SELLER</string>
     <string name="button_user_reg_switch">USER</string>
+
 
     <!-- to toggle the open close button of the navigation drawer -->
     <string name="nav_open">Open</string>
