@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
+    android:fillViewport="true"
     tools:context=".SellerAdditionalDetails">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center">
 
         <TextView
@@ -186,12 +188,12 @@
             android:layout_below="@id/et_IFSC_code"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="50dp"
             android:background="@drawable/button_view_background"
             android:elevation="10dp"
             android:text="@string/button_register"
             android:textColor="@color/button_text_color"
             android:textSize="20sp"
+            android:layout_marginBottom="60dp"
             android:textStyle="bold" />
     </RelativeLayout>
 </ScrollView>

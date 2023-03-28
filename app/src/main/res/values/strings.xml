@@ -34,4 +34,13 @@
     <string name="description_user_kit">By checking this option , you agree to deliver some selected items within 1 hour from the time of ordering.</string>
     <string name="button_seller_reg_switch">SELLER</string>
     <string name="button_user_reg_switch">USER</string>
+
+    <!-- to toggle the open close button of the navigation drawer -->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_title">Navigation Drawer</string>
+    <string name="drawer_open">Open Navigation Drawer</string>
+    <string name="drawer_close">Close Navigation Drawer</string>
 </resources>
