@@ -43,4 +43,6 @@
     <string name="drawer_title">Navigation Drawer</string>
     <string name="drawer_open">Open Navigation Drawer</string>
     <string name="drawer_close">Close Navigation Drawer</string>
+    <string name="rs_sign">₹</string>
+
 </resources>

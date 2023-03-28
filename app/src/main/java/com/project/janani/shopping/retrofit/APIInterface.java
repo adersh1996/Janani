@@ -5,6 +5,9 @@ import com.project.janani.shopping.model.Root;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -42,4 +45,9 @@ public interface APIInterface {
                                             @Part("IFSCCode") RequestBody IFSC_code,
                                             @Part("userKit") RequestBody user_kit
     );
+
+    @FormUrlEncoded
+    @POST("view_product_seller_id.php")
+    Call<Root> viewProductsSellerApiCall(@Field("seller_id") String sellerId);
+
 }
