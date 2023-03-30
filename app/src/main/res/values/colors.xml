@@ -15,4 +15,5 @@
     <color name="heading_color">#D9CBE7</color>
     <color name="button_color">#B27EE6</color>
     <color name="button_text_color">#D5D1D8</color>
+    <color name="grey">#E8E3E3</color>
 </resources>

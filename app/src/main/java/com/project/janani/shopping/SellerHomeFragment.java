@@ -1,5 +1,6 @@
 package com.project.janani.shopping;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,15 @@ public class SellerHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_seller_home, container, false);
         initView(view);
 
-    apiCall("1");
+        apiCall("1");
+
+        sellerAddProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(getActivity(),SellerAddProductActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -56,7 +65,7 @@ public class SellerHomeFragment extends Fragment {
                         sellerProductListRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
                         sellerProductListRecyclerView.setAdapter(sellerProductListAdapter);
                     }
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Server Failed", Toast.LENGTH_SHORT).show();
                 }
             }
