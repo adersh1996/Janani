@@ -6,8 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -21,6 +25,7 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
     UserOrderFragment userOrderFragment = new UserOrderFragment();
     UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
     UserAccountFragment userAccountFragment = new UserAccountFragment();
+    UserWishlistFragment userWishlistFragment = new UserWishlistFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +52,20 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.new_menu, menu);
+        return true;
+    }
+
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-
+        switch (item.getItemId()) {
+            case R.id.go_to_cart:
+                startActivity(new Intent(getApplicationContext(), ShoppingCartActivity.class));
+                return true;
+        }
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -67,26 +83,29 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
         switch (item.getItemId()) {
-            case R.id.sell_home_item:
+            case R.id.user_home_item:
                 getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userHomeFragment).commit();
                 closeDrawer();
                 return true;
 
-            case R.id.sell_order_item:
+            case R.id.user_order_item:
                 getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userOrderFragment).commit();
                 closeDrawer();
                 return true;
 
-            case R.id.sell_history_item:
+            case R.id.user_history_item:
                 getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userHistoryFragment).commit();
                 closeDrawer();
                 return true;
 
-            case R.id.sell_account_item:
+            case R.id.user_account_item:
                 getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userAccountFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.user_wishlist_item:
+                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userWishlistFragment).commit();
                 closeDrawer();
                 return true;
         }

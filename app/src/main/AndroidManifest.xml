@@ -21,6 +21,15 @@
             android:name=".SellerAddProductActivity"
             android:exported="false" />
         <activity
+            android:name=".EnterAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShoppingCartActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserHomeActivity"
             android:exported="false" />
         <activity

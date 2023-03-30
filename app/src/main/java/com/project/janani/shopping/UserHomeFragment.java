@@ -1,12 +1,27 @@
 package com.project.janani.shopping;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.project.janani.shopping.adapters.CategoriesAdapter;
+import com.project.janani.shopping.adapters.SellerProductListAdapter;
+import com.project.janani.shopping.adapters.UserProductListAdapter;
+import com.project.janani.shopping.model.Root;
+import com.project.janani.shopping.retrofit.APIClient;
+import com.project.janani.shopping.retrofit.APIInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +38,9 @@ public class UserHomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private EditText etSearchBar;
+    private RecyclerView rvCategoriesView;
+    private RecyclerView rvProductListView;
 
     public UserHomeFragment() {
         // Required empty public constructor
@@ -58,7 +76,61 @@ public class UserHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_home, container, false);
+        initView(view);
+        categoryViewDisplay();
+        productViewDisplay("0");
+
+        return view;
+    }
+
+    private void productViewDisplay(String productId) {
+        APIInterface api = APIClient.getClient().create(APIInterface.class);
+        api.viewProductsUserApiCall(productId).enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                if (response.isSuccessful()) {
+                    Root root = response.body();
+                    if (root.status) {
+
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+                        rvProductListView.setLayoutManager(gridLayoutManager);
+                        UserProductListAdapter userProductListAdapter = new UserProductListAdapter(getActivity(), root);
+                        rvProductListView.setAdapter(userProductListAdapter);
+//                        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+//                        rvProductListView.setLayoutManager(layoutManager);
+//                        SellerProductListAdapter sellerProductListAdapter = new SellerProductListAdapter(root, getActivity());
+//
+//                        int spanCount = 2; // 3 columns
+//                        int spacing = 50; // 50px
+//                        boolean includeEdge = true;
+//                        rvProductListView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
+//                        rvProductListView.setAdapter(sellerProductListAdapter);
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Server Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void categoryViewDisplay() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvCategoriesView.setLayoutManager(linearLayoutManager);
+        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(getActivity());
+        rvCategoriesView.setAdapter(categoriesAdapter);
+
+    }
+
+    private void initView(View view) {
+        etSearchBar = view.findViewById(R.id.et_search_bar);
+        rvCategoriesView = view.findViewById(R.id.rv_categories_view);
+        rvProductListView = view.findViewById(R.id.rv_product_list_view);
     }
 }

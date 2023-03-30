@@ -48,5 +48,7 @@
     <string name="drawer_open">Open Navigation Drawer</string>
     <string name="drawer_close">Close Navigation Drawer</string>
     <string name="rs_sign">₹</string>
+    <string name="search">Search</string>
+    <string name="welcome_wishlist">Welcome</string>
 
 </resources>

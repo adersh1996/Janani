@@ -52,4 +52,8 @@ public interface APIInterface {
 
 
 
+    @FormUrlEncoded
+    @POST("view_products.php")
+    Call<Root> viewProductsUserApiCall(@Field("product_id") String productId);
+
 }
