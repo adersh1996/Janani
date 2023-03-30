@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/user_home_item"
+        android:title="Home" />
+    <item
+        android:id="@+id/user_order_item"
+        android:title="Order" />
+    <item
+        android:id="@+id/user_history_item"
+        android:title="History" />
+    <item
+        android:id="@+id/user_account_item"
+        android:title="Account" />
+    <item
+        android:id="@+id/user_wishlist_item"
+        android:title="Wishlist" />
+
+</menu>

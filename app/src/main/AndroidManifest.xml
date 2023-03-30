@@ -15,6 +15,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".EnterAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShoppingCartActivity"
+            android:exported="false" />
+        <activity
             android:name=".UserHomeActivity"
             android:exported="false" />
         <activity
@@ -43,7 +52,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

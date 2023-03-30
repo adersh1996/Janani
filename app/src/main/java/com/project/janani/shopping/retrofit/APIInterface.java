@@ -50,4 +50,8 @@ public interface APIInterface {
     @POST("view_product_seller_id.php")
     Call<Root> viewProductsSellerApiCall(@Field("seller_id") String sellerId);
 
+    @FormUrlEncoded
+    @POST("view_products.php")
+    Call<Root> viewProductsUserApiCall(@Field("product_id") String productId);
+
 }
