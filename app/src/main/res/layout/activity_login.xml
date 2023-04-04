@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+    android:background="#E5E5CB"
     android:paddingBottom="30dp"
     tools:context=".LoginActivity">
 
@@ -22,7 +22,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="150dp"
             android:text="@string/button_login"
-            android:textColor="@color/heading_color"
+
             android:textSize="40sp"
             android:textStyle="bold" />
 
@@ -43,6 +43,7 @@
             android:layout_below="@id/tv_login_title"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
+            android:text="9865321470"
             android:background="@drawable/view_background"
             android:drawableLeft="@drawable/baseline_local_phone_24"
             android:drawablePadding="10dp"
@@ -60,6 +61,7 @@
             android:layout_below="@+id/et_phone_number"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:text="qwertyuiop"
             android:background="@drawable/view_background"
             android:drawableLeft="@drawable/baseline_lock_24"
             android:drawablePadding="10dp"

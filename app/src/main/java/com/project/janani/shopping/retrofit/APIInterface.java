@@ -16,19 +16,20 @@ import retrofit2.http.Query;
 
 public interface APIInterface {
     @Multipart
-    @POST("login_client.php")
-    Call<Root> CALL_APIUserLogin(@Part("phone") RequestBody phone_number,
+    @POST("user_login.php")
+    Call<Root> CALL_APIUserLogin(@Part("mobile") RequestBody phone_number,
                                  @Part("password") RequestBody password);
+
 
     @Multipart
     @POST("user_reg.php")
-    Call<Root> CALL_API_User_Registration(@Part MultipartBody.Part image,
-                                          @Part("name") RequestBody name,
-                                          @Part("mobile") RequestBody mobile,
-                                          @Part("age") RequestBody age,
-                                          @Part("email") RequestBody email,
-                                          @Part("password") RequestBody password,
-                                          @Part("confirmPassword") RequestBody confirm_password
+    Call<Root> CALL_API_User_Registration(
+            @Part("name") RequestBody name,
+            @Part("mobile") RequestBody mobile,
+            @Part("age") RequestBody age,
+            @Part("email") RequestBody email,
+            @Part("password") RequestBody password,
+            @Part("device_token") RequestBody deviceToken
     );
 
     @Multipart
@@ -51,10 +52,31 @@ public interface APIInterface {
     Call<Root> viewProductsSellerApiCall(@Field("seller_id") String sellerId);
 
 
+    @POST("view_products.php")
+    Call<Root> viewProductsUserApiCall();
 
     @FormUrlEncoded
-    @POST("view_products.php")
-    Call<Root> viewProductsUserApiCall(@Field("product_id") String productId);
+    @POST("view_product_byProduct_id.php")
+    Call<Root> viewProductDetailsApiCall(@Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("add_cart.php")
+    Call<Root> addToCartApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id, @Field("qty") String quantity);
+
+
+    @FormUrlEncoded
+    @POST("view_cart.php")
+    Call<Root> viewCartApiCall(@Field("user_id") String user_id);
+
+    @POST("view_category.php")
+    Call<Root> categoryListApiCall();
+
+    @POST("view_faq.php")
+    Call<Root> faqApiCall();
+
+    @FormUrlEncoded
+    @POST("order_history.php")
+    Call<Root> orderHistoryApiCall(@Field("user_id") String user_id);
 
     @Multipart
     @POST("add_product.php")
@@ -69,4 +91,23 @@ public interface APIInterface {
     Call<Root> viewOrderHistorySellerApiCall(@Field("seller_id") String sellerId);
 
 
+    @FormUrlEncoded
+    @POST("product_filter.php")
+    Call<Root> categoryFilterApiCall(@Field("category") String category);
+
+    @FormUrlEncoded
+    @POST("delete_cart.php")
+    Call<Root> removeItemApiCall(@Field("cart_id") String cart_id);
+
+    @FormUrlEncoded
+    @POST("search_product.php")
+    Call<Root> searchItemApiCall(@Field("term") String term);
+
+    @FormUrlEncoded
+    @POST("kit_button.php")
+    Call<Root> userKitCheckOutApiCall(@Field("user_id") String user_id, @Field("lat") String latitude, @Field("log") String longitude, @Field("address") String address, @Field("phone") String phone, @Field("category") String category, @Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("add_cart.php")
+    Call<Root> placeOrderAPiCall(@Field("product_id") String product_id, @Field("user_id") String user_id, @Field("qty") String quantity);
 }

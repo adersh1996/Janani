@@ -1,6 +1,8 @@
 package com.project.janani.shopping.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +19,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.project.janani.shopping.R;
+import com.project.janani.shopping.model.Root;
+import com.project.janani.shopping.retrofit.APIClient;
+import com.project.janani.shopping.retrofit.APIInterface;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.MyViewHolder> {
-    int[] image = {R.drawable.shopping, R.drawable.shopping, R.drawable.shopping, R.drawable.shopping};
-
-
 
     Context context;
+    Root root;
 
+    String quantityOrdered;
 
-    public ShoppingCartAdapter(Context context) {
+    public ShoppingCartAdapter(Context context, Root root) {
         this.context = context;
+        this.root = root;
     }
 
     @NonNull
@@ -41,16 +50,56 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        Glide.with(context).load(root.orderDetails.get(position).photo).into(holder.ivProductImage);
+        holder.tvProductTitle.setText(root.orderDetails.get(position).name);
+        holder.tvProductPrice.setText(root.orderDetails.get(position).selling_price);
+        holder.tvQuantity.setText(root.orderDetails.get(position).quantity_ordered);
 
-        Glide.with(context).load(image[position]).into(holder.ivProductImage);
+
+        SharedPreferences loginSharedPreferences = context.getSharedPreferences("loginShared", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = loginSharedPreferences.edit();
+        editor.putString("total_amount", root.orderDetails.get(position).total_amount);
+        editor.putString("quantity", String.valueOf(root.orderDetails.get(position).quantity_ordered));
+        editor.apply();
+
+        holder.cvRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeItem();
+            }
+        });
+
+    }
+
+    private void removeItem() {
+        APIInterface removeItemAPI = APIClient.getClient().create(APIInterface.class);
+        removeItemAPI.removeItemApiCall("4").enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                Root newRoot = response.body();
+                if (response.isSuccessful()) {
+                    if (newRoot.status) {
+                        Toast.makeText(context, newRoot.message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, newRoot.message, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, "response not success", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return image.length;
+        return root.orderDetails.size();
     }
-
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -58,20 +107,22 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         private ImageView ivProductImage;
         private TextView tvProductTitle;
         private TextView tvProductCategory;
-        private TextView tvRsSign;
         private TextView tvProductPrice;
-        private CardView cvAddButton;
+
         private CardView cvRemoveButton;
+        private TextView tvQuantity;
+
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             cvProductImage = itemView.findViewById(R.id.cv_product_image);
             ivProductImage = itemView.findViewById(R.id.iv_product_image);
             tvProductTitle = itemView.findViewById(R.id.tv_product_title);
             tvProductCategory = itemView.findViewById(R.id.tv_product_category);
-            tvRsSign = itemView.findViewById(R.id.tv_rs_sign);
             tvProductPrice = itemView.findViewById(R.id.tv_product_price);
-            cvAddButton = itemView.findViewById(R.id.cv_add_button);
             cvRemoveButton = itemView.findViewById(R.id.cv_remove_button);
+            tvQuantity = itemView.findViewById(R.id.tv_quantity);
+
 
         }
     }

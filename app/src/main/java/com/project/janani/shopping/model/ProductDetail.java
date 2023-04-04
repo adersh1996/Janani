@@ -16,4 +16,7 @@ public class ProductDetail {
     public String order_status;
     public String qty;
     public String amount;
+    public String category;
+
+
 }

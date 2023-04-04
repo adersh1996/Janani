@@ -1,15 +1,18 @@
 package com.project.janani.shopping;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.project.janani.shopping.adapters.WishlistAdapter;
 
 /**
@@ -29,6 +32,8 @@ public class UserWishlistFragment extends Fragment {
     private String mParam2;
     private TextView tvUserName;
     private RecyclerView rvWishlistItems;
+    private ScrollView scrollView;
+    private ShimmerFrameLayout shimmerLayoutWishList;
 
     public UserWishlistFragment() {
         // Required empty public constructor
@@ -68,6 +73,13 @@ public class UserWishlistFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_wishlist, container, false);
         initView(view);
 
+
+        rvWishlistItems.setNestedScrollingEnabled(false);
+
+        SharedPreferences loginSharedPreference = getActivity().getSharedPreferences("loginShared", getActivity().MODE_PRIVATE);
+        String userName = loginSharedPreference.getString("userName", "default");
+        tvUserName.setText(userName);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvWishlistItems.setLayoutManager(linearLayoutManager);
         WishlistAdapter wishlistAdapter = new WishlistAdapter(getActivity());
@@ -79,5 +91,7 @@ public class UserWishlistFragment extends Fragment {
     private void initView(View view) {
         tvUserName = view.findViewById(R.id.tv_user_name);
         rvWishlistItems = view.findViewById(R.id.rv_wishlist_items);
+        scrollView = view.findViewById(R.id.scrollView);
+        shimmerLayoutWishList = view.findViewById(R.id.shimmer_layout_wish_list);
     }
 }

@@ -2,9 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:background="@color/purple_200"
     app:cardBackgroundColor="#D5CEA3"
     app:cardCornerRadius="10dp">
 
@@ -43,12 +42,13 @@
         <TextView
             android:id="@+id/tv_display_user_address"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tv_display_user_phone"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:drawablePadding="20dp"
             android:gravity="start"
+    
             android:paddingLeft="45dp"
             android:paddingTop="10dp"
             android:text="sample"

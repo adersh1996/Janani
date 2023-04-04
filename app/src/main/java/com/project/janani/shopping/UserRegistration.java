@@ -168,7 +168,7 @@ public class UserRegistration extends AppCompatActivity implements Validator.Val
             RequestBody email = RequestBody.create(MediaType.parse("text/plain"), etEmailId.getText().toString());
             RequestBody password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
             RequestBody age = RequestBody.create(MediaType.parse("text/plain"), etUserAge.getText().toString());
-            RequestBody confirmPassword = RequestBody.create(MediaType.parse("text/plain"), etConfirmPassword.getText().toString());
+            RequestBody device_token = RequestBody.create(MediaType.parse("text/plain"), "qwertyuiop");
 
 
             MultipartBody.Part proImageFilePart = null;
@@ -180,16 +180,16 @@ public class UserRegistration extends AppCompatActivity implements Validator.Val
             }
 
             APIInterface api_user_registration = APIClient.getClient().create(APIInterface.class);
-            api_user_registration.CALL_API_User_Registration(proImageFilePart, name, phone, age, email, password, confirmPassword).enqueue(new Callback<Root>() {
+            api_user_registration.CALL_API_User_Registration(name, phone, age, email, password, device_token).enqueue(new Callback<Root>() {
                 @Override
                 public void onResponse(Call<Root> call, Response<Root> response) {
                     if (response.isSuccessful()) {
                         Root root = response.body();
                         if (root.status) {
-                            Toast.makeText(UserRegistration.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserRegistration.this, root.message, Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         } else {
-                            Toast.makeText(UserRegistration.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserRegistration.this, root.message, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

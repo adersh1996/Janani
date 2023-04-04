@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +17,24 @@
         android:theme="@style/Theme.Janani"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".UserKitSearchResult"
+            android:exported="false" />
+        <activity
+            android:name=".SearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserKitPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserKitAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserKitProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductDetailsActivity"
+            android:exported="true" />
         <activity
             android:name=".SellerOrderDetailsActivity"
             android:exported="false" />
