@@ -56,4 +56,17 @@ public interface APIInterface {
     @POST("view_products.php")
     Call<Root> viewProductsUserApiCall(@Field("product_id") String productId);
 
+    @Multipart
+    @POST("add_product.php")
+    Call<Root> addProductSellerApiCall(@Part("seller_id")RequestBody sellerId,@Part("name")RequestBody name,
+                                       @Part("description")RequestBody description,@Part("mrp")RequestBody mrp,
+                                       @Part("selling_price")RequestBody sellingPrice,@Part("qty")RequestBody quantity,
+                                       @Part MultipartBody.Part image1,@Part MultipartBody.Part image2,
+                                       @Part MultipartBody.Part image3,@Part MultipartBody.Part video1);
+
+    @FormUrlEncoded
+    @POST("view_products.php")
+    Call<Root> viewOrderHistorySellerApiCall(@Field("seller_id") String sellerId);
+
+
 }

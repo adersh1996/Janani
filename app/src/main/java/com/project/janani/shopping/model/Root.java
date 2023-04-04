@@ -9,4 +9,6 @@ public class Root{
     public ArrayList<UserDetail> userDetails;
     public ArrayList<ProductDetail> product_details;
 
+
+
 }

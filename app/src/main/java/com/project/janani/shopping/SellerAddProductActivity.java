@@ -20,6 +20,10 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class SellerAddProductActivity extends AppCompatActivity {
 
 
@@ -36,6 +40,10 @@ public class SellerAddProductActivity extends AppCompatActivity {
     private TextInputEditText productImageThreeEditText;
     private TextInputEditText productVideoEditText;
     private Button addProductButton;
+
+    private File imageFileOne,imageFileTwo,imageFileThree;
+
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,7 @@ public class SellerAddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openGallery(PICK_IMAGE_REQUEST_CODE);
+                i=1;
             }
         });
 
@@ -65,6 +74,7 @@ public class SellerAddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openGallery(PICK_IMAGE_REQUEST_CODE);
+                i=2;
             }
         });
 
@@ -72,6 +82,7 @@ public class SellerAddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openGallery(PICK_IMAGE_REQUEST_CODE);
+                i=3;
             }
         });
 
@@ -185,7 +196,19 @@ public class SellerAddProductActivity extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
                 File file = new File(selectedImageUri.getPath());
                 String imagePath = file.getAbsolutePath();
-                productImageOneEditText.setText(imagePath);
+                if (i==1){
+                    imageFileOne = new File(imagePath);
+                    productImageOneEditText.setText(imagePath);
+                }
+                if (i==2){
+                    imageFileTwo = new File(imagePath);
+                    productImageTwoEditText.setText(imagePath);
+                }
+                if (i==3){
+                    imageFileThree = new File(imagePath);
+                    productImageThreeEditText.setText(imagePath);
+                }
+
             } else if (requestCode == PICK_VIDEO_REQUEST_CODE) {
                 Uri selectedVideoUri = data.getData();
                 File file = new File(selectedVideoUri.getPath());
@@ -193,5 +216,34 @@ public class SellerAddProductActivity extends AppCompatActivity {
                 productVideoEditText.setText(videoPath);
             }
         }
+    }
+
+    public void apiCall(String productName,String category,String description,
+                        String mrp,String sellingPrice,File imageFileFileOne,File imageFileTwo,File imageFileThree){
+
+        RequestBody productNameRb = RequestBody.create(MediaType.parse("text/plain"), productName);
+        RequestBody categoryRb = RequestBody.create(MediaType.parse("text/plain"), category);
+        RequestBody descriptionRb = RequestBody.create(MediaType.parse("text/plain"), description);
+        RequestBody mrpRb = RequestBody.create(MediaType.parse("text/plain"), mrp);
+        RequestBody sellingPriceRb = RequestBody.create(MediaType.parse("text/plain"), sellingPrice);
+        MultipartBody.Part imageFileOneMultiPart = null;
+        MultipartBody.Part imageFileTwoMultiPart = null;
+        MultipartBody.Part imageFileThreeMultiPart = null;
+
+        try {
+            imageFileOneMultiPart = MultipartBody.Part.createFormData("image", imageFileFileOne.getName(),
+                    RequestBody.create(MediaType.parse("image/*"), imageFileFileOne));
+            imageFileTwoMultiPart = MultipartBody.Part.createFormData("image", imageFileTwo.getName(),
+                    RequestBody.create(MediaType.parse("image/*"), imageFileTwo));
+            imageFileThreeMultiPart = MultipartBody.Part.createFormData("image", imageFileThree.getName(),
+                    RequestBody.create(MediaType.parse("image/*"), imageFileThree));
+        } catch (NullPointerException e) {
+
+
+
+        }
+
+
+
     }
 }
