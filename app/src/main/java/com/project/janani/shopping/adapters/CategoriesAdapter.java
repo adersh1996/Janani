@@ -1,12 +1,10 @@
 package com.project.janani.shopping.adapters;
 
 
-import static androidx.core.content.ContextCompat.getDrawable;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +15,19 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.project.janani.shopping.R;
-
-import org.w3c.dom.Text;
+import com.project.janani.shopping.UserHomeFragment;
+import com.project.janani.shopping.model.Root;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.MyViewHolder> {
     int row_index = -1;
     Context context;
+    Root root;
 
-    public CategoriesAdapter(Context context) {
+    public CategoriesAdapter(Context context, Root root) {
         this.context = context;
+        this.root = root;
     }
-
-    String[] productCategories = {"All Items", "Period Pads", "Tampons", "Menstrual Cups", "Period Pants"};
 
     @NonNull
     @Override
@@ -41,14 +38,17 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.categoryTitle.setText(productCategories[position]);
-
+        holder.categoryTitle.setText(root.category.get(position).item);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 row_index = position;
                 notifyDataSetChanged();
 
+                SharedPreferences categorySharedPreference = context.getSharedPreferences("category select", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = categorySharedPreference.edit();
+                editor.putString("category", root.category.get(position).item);
+                editor.commit();
             }
         });
         if (row_index == position) {
@@ -65,7 +65,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 
     @Override
     public int getItemCount() {
-        return productCategories.length;
+        return root.category.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

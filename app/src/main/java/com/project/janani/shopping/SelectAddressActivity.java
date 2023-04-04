@@ -1,5 +1,6 @@
 package com.project.janani.shopping;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,15 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.project.janani.shopping.adapters.SavedAddressAdapter;
+import com.project.janani.shopping.model.Root;
+import com.project.janani.shopping.retrofit.APIClient;
+import com.project.janani.shopping.retrofit.APIInterface;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SelectAddressActivity extends AppCompatActivity {
     ArrayList<SavedAddressClass> savedAddressList;
     private RecyclerView savedAddressView;
     private SavedAddressAdapter savedAddressAdapter;
-    private Button btAddAddressButton;
+    private TextView tvAddAddressButton;
+    private Button btPlaceOrderButton;
     private TextView tvAllClearButton;
 
     @Override
@@ -35,10 +44,39 @@ public class SelectAddressActivity extends AppCompatActivity {
         buildRecyclerView();
 
 
-        btAddAddressButton.setOnClickListener(new View.OnClickListener() {
+        tvAddAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), EnterAddressActivity.class));
+            }
+        });
+
+        btPlaceOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                APIInterface apiPlaceOrder = APIClient.getClient().create(APIInterface.class);
+                SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
+                String userID = loginSharedPreferences.getString("userId", "default");
+                String productID = loginSharedPreferences.getString("productID", "default");
+                String quantity = loginSharedPreferences.getString("quantity", "default");
+                apiPlaceOrder.placeOrderAPiCall(productID, userID, quantity).enqueue(new Callback<Root>() {
+                    @Override
+                    public void onResponse(Call<Root> call, Response<Root> response) {
+                        Root root = response.body();
+                        if (response.isSuccessful()) {
+                            if (root.status) {
+                                Toast.makeText(SelectAddressActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SelectAddressActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Root> call, Throwable t) {
+                        Toast.makeText(SelectAddressActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         tvAllClearButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +123,8 @@ public class SelectAddressActivity extends AppCompatActivity {
 
     private void initView() {
         tvAllClearButton = findViewById(R.id.tv_all_clear_button);
-        btAddAddressButton = findViewById(R.id.bt_add_new_address);
+        btPlaceOrderButton = findViewById(R.id.bt_place_order_button);
+        tvAddAddressButton = findViewById(R.id.tv_add_address_button);
     }
 }
 

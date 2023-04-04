@@ -2,6 +2,7 @@ package com.project.janani.shopping.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,20 +11,23 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.project.janani.shopping.ProductDetailsActivity;
 import com.project.janani.shopping.R;
+import com.project.janani.shopping.model.ProductDetail;
 import com.project.janani.shopping.model.Root;
 
 public class UserProductListAdapter extends RecyclerView.Adapter<UserProductListAdapter.MyViewHolder> {
     Context context;
     Root root;
     int row_index = -1;
-    int[] images = { R.drawable.shopping, R.drawable.shopping, R.drawable.shopping, R.drawable.shopping};
+    int[] images = {R.drawable.shopping, R.drawable.shopping, R.drawable.shopping, R.drawable.shopping};
 
     public UserProductListAdapter(Context context, Root root) {
         this.context = context;
@@ -39,37 +43,25 @@ public class UserProductListAdapter extends RecyclerView.Adapter<UserProductList
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-//        Glide.with(context).load(root.product_details.get(position).image1).into(holder.ivProductImage);
-//        holder.tvProductPrice.setText(root.product_details.get(position).mrp);
-        Glide.with(context).load(images[position]).into(holder.ivProductImage);
+        Glide.with(context).load(root.product_details.get(position).image1).into(holder.ivProductImage);
+        holder.tvProductTitle.setText(root.product_details.get(position).name);
+        holder.tvProductPrice.setText(root.product_details.get(position).selling_price);
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                row_index = position;
-                notifyDataSetChanged();
-
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                ProductDetailsActivity productDetailsActivity = new ProductDetailsActivity(root.product_details.get(position).product_id);
             }
         });
-        if (row_index == position) {
-            holder.tvProductTitle.setTextColor(Color.parseColor("#757070"));
-            holder.tvProductPrice.setTextColor(Color.parseColor("#757070"));
-            holder.rlHolderView.setBackgroundColor(Color.parseColor("#5FCCA2"));
-            holder.rlMainRelativeView.setBackgroundColor(Color.parseColor("#EEF3F1"));
-
-        } else {
-            holder.tvProductTitle.setTextColor(Color.parseColor("#414D48"));
-            holder.tvProductPrice.setTextColor(Color.parseColor("#414D48"));
-            holder.rlHolderView.setBackgroundColor(Color.parseColor("#ffffff"));
-            holder.rlMainRelativeView.setBackgroundColor(Color.parseColor("#CAC8C8"));
-        }
-
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
-//        return root.product_details.size();
+        return root.product_details.size();
     }
 
 

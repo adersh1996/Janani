@@ -16,5 +16,8 @@
     <item
         android:id="@+id/user_wishlist_item"
         android:title="Wishlist" />
+    <item
+        android:id="@+id/user_faq_option"
+        android:title="FAQ" />
 
 </menu>

@@ -1,10 +1,15 @@
 package com.project.janani.shopping;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -12,8 +17,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.janani.shopping.adapters.CategoriesAdapter;
-import com.project.janani.shopping.adapters.SellerProductListAdapter;
 import com.project.janani.shopping.adapters.UserProductListAdapter;
 import com.project.janani.shopping.model.Root;
 import com.project.janani.shopping.retrofit.APIClient;
@@ -38,9 +44,14 @@ public class UserHomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ScrollView scrollView;
+    private ShimmerFrameLayout shimmerFrameLayout;
     private EditText etSearchBar;
     private RecyclerView rvCategoriesView;
     private RecyclerView rvProductListView;
+    private FloatingActionButton btUserKitButton;
+    public static String data;
+    private ImageView ivSearchButton;
 
     public UserHomeFragment() {
         // Required empty public constructor
@@ -78,15 +89,47 @@ public class UserHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
         initView(view);
+
+        shimmerFrameLayout.startShimmer();
+
+        rvProductListView.setNestedScrollingEnabled(false);
+
+        SharedPreferences categorySharedPreference = getActivity().getSharedPreferences("category select", Context.MODE_PRIVATE);
+        data = categorySharedPreference.getString("category", "default");
+
         categoryViewDisplay();
-        productViewDisplay("0");
+        productViewDisplay();
+
+        ivSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchProduct();
+            }
+        });
+        btUserKitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), UserKitProductActivity.class));
+            }
+        });
+
 
         return view;
     }
 
-    private void productViewDisplay(String productId) {
+    private void searchProduct() {
+        Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (!etSearchBar.getText().toString().isEmpty()) {
+            intent.putExtra("searchTerm", etSearchBar.getText().toString());
+            startActivity(intent);
+        }
+    }
+
+    private void productViewDisplay() {
+
         APIInterface api = APIClient.getClient().create(APIInterface.class);
-        api.viewProductsUserApiCall(productId).enqueue(new Callback<Root>() {
+        api.viewProductsUserApiCall().enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 if (response.isSuccessful()) {
@@ -97,6 +140,9 @@ public class UserHomeFragment extends Fragment {
                         rvProductListView.setLayoutManager(gridLayoutManager);
                         UserProductListAdapter userProductListAdapter = new UserProductListAdapter(getActivity(), root);
                         rvProductListView.setAdapter(userProductListAdapter);
+                        shimmerFrameLayout.stopShimmer();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        scrollView.setVisibility(View.VISIBLE);
 //                        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 //                        rvProductListView.setLayoutManager(layoutManager);
 //                        SellerProductListAdapter sellerProductListAdapter = new SellerProductListAdapter(root, getActivity());
@@ -121,16 +167,38 @@ public class UserHomeFragment extends Fragment {
     }
 
     private void categoryViewDisplay() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        rvCategoriesView.setLayoutManager(linearLayoutManager);
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(getActivity());
-        rvCategoriesView.setAdapter(categoriesAdapter);
 
+
+        APIInterface apiCategoryList = APIClient.getClient().create(APIInterface.class);
+        apiCategoryList.categoryListApiCall().enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                Root root = response.body();
+                if (response.isSuccessful()) {
+                    if (root.status) {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                        rvCategoriesView.setLayoutManager(linearLayoutManager);
+                        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(getActivity(), root);
+                        rvCategoriesView.setAdapter(categoriesAdapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initView(View view) {
+
         etSearchBar = view.findViewById(R.id.et_search_bar);
         rvCategoriesView = view.findViewById(R.id.rv_categories_view);
         rvProductListView = view.findViewById(R.id.rv_product_list_view);
+        btUserKitButton = view.findViewById(R.id.bt_user_kit_button);
+        ivSearchButton = view.findViewById(R.id.iv_search_button);
+        scrollView = view.findViewById(R.id.scroll_view);
+        shimmerFrameLayout = view.findViewById(R.id.sl_user_home_shimmer_layout);
     }
 }

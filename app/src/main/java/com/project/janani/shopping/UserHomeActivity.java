@@ -26,6 +26,7 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
     UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
     UserAccountFragment userAccountFragment = new UserAccountFragment();
     UserWishlistFragment userWishlistFragment = new UserWishlistFragment();
+    FAQFragment faqFragment = new FAQFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,11 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.user_wishlist_item:
                 getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userWishlistFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.user_faq_option:
+                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, faqFragment).commit();
                 closeDrawer();
                 return true;
         }

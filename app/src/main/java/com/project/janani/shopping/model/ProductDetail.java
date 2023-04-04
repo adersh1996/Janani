@@ -9,4 +9,7 @@ public class ProductDetail {
     public String video;
     public String mrp;
     public String selling_price;
+    public String category;
+
+
 }
