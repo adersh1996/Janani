@@ -64,27 +64,54 @@
 
         <TextView
             android:id="@+id/tv_history_product_price"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/tv_history_rs_sign"
             android:layout_alignBottom="@id/tv_history_rs_sign"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/tv_history_rs_sign"
+            android:minWidth="70dp"
             android:text="200"
             android:textSize="25sp" />
 
         <TextView
+            android:id="@+id/tv_history_product_qty_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_history_rs_sign"
+            android:layout_alignBottom="@id/tv_history_rs_sign"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_history_product_price"
+            android:gravity="center_vertical"
+            android:minWidth="50dp"
+            android:text="Qty:"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_history_product_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_history_rs_sign"
+            android:layout_alignBottom="@id/tv_history_rs_sign"
+            android:layout_toRightOf="@id/tv_history_product_qty_title"
+            android:gravity="center_vertical"
+            android:minWidth="50dp"
+            android:text="100"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/tv_history_order_status"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_below="@id/tv_history_product_category"
+            android:minWidth="200dp"
+            android:layout_below="@id/tv_history_product_price"
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/tv_history_product_price"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:text="Delivered"
             android:textColor="#54CA0B"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

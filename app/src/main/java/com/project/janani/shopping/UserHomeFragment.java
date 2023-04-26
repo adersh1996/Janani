@@ -155,12 +155,18 @@ public class UserHomeFragment extends Fragment {
                     }
                 } else {
                     Toast.makeText(getActivity(), "Server Failed", Toast.LENGTH_SHORT).show();
+                    shimmerFrameLayout.stopShimmer();
+                    shimmerFrameLayout.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
                 Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
 
             }
         });

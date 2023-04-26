@@ -38,7 +38,6 @@ public class UserKitSearchResultAdapter extends RecyclerView.Adapter<UserKitSear
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Toast.makeText(context, "Adapter", Toast.LENGTH_SHORT).show();
         Glide.with(context).load(root.product_details.get(position).image1).into(holder.ivUserKitSearchProductImage);
         holder.tvUserKitSearchProductTitle.setText(root.product_details.get(position).name);
         holder.tvUserKitSearchProductPrice.setText(root.product_details.get(position).selling_price);
