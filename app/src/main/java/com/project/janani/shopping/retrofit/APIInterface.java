@@ -61,7 +61,9 @@ public interface APIInterface {
 
     @FormUrlEncoded
     @POST("add_cart.php")
-    Call<Root> addToCartApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id, @Field("qty") String quantity);
+    Call<Root> addToCartApiCall(@Field("product_id") String product_id,
+                                @Field("user_id") String user_id,
+                                @Field("qty") String quantity);
 
 
     @FormUrlEncoded
@@ -87,7 +89,7 @@ public interface APIInterface {
                                        @Part MultipartBody.Part image3,@Part MultipartBody.Part video1);
 
     @FormUrlEncoded
-    @POST("view_products.php")
+    @POST("seller_order_history.php")
     Call<Root> viewOrderHistorySellerApiCall(@Field("seller_id") String sellerId);
 
 
@@ -105,9 +107,17 @@ public interface APIInterface {
 
     @FormUrlEncoded
     @POST("kit_button.php")
-    Call<Root> userKitCheckOutApiCall(@Field("user_id") String user_id, @Field("lat") String latitude, @Field("log") String longitude, @Field("address") String address, @Field("phone") String phone, @Field("category") String category, @Field("product_id") String product_id);
+    Call<Root> userKitCheckOutApiCall(@Field("user_id") String user_id,
+                                      @Field("lat") String latitude,
+                                      @Field("log") String longitude,
+                                      @Field("address") String address,
+                                      @Field("phone") String phone,
+                                      @Field("category") String category,
+                                      @Field("product_id") String product_id);
 
     @FormUrlEncoded
     @POST("add_cart.php")
-    Call<Root> placeOrderAPiCall(@Field("product_id") String product_id, @Field("user_id") String user_id, @Field("qty") String quantity);
+    Call<Root> placeOrderAPiCall(@Field("product_id") String product_id,
+                                 @Field("user_id") String user_id,
+                                 @Field("qty") String quantity);
 }
