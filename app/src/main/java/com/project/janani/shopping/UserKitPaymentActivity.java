@@ -70,7 +70,7 @@ public class UserKitPaymentActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
         String user_id = sharedPreferences.getString("userId", "default;");
         String address = sharedPreferences.getString("address", "default");
-        if (!address.isEmpty()) {
+        if (!(address.isEmpty())) {
             getLongitude = getLatitude = null;
         }
         String category = sharedPreferences.getString("category", "default");

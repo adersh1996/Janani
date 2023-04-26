@@ -57,6 +57,7 @@ public class SearchResultActivity extends AppCompatActivity {
                         shimmerLayoutSearchResult.stopShimmer();
                         shimmerLayoutSearchResult.setVisibility(View.GONE);
                         scrollView.setVisibility(View.VISIBLE);
+
                     }
                 }
             }

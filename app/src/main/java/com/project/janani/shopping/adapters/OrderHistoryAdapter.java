@@ -38,13 +38,16 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         Glide.with(context).load(root.orderDetails.get(position).photo).into(holder.ivHistoryProductImage);
         holder.tvHistoryProductTitle.setText(root.orderDetails.get(position).name);
         holder.tvHistoryProductCategory.setText(root.orderDetails.get(position).description);
+        holder.tvHistoryProductPrice.setText(root.orderDetails.get(position).selling_price);
+        holder.tvHistoryProductQty.setText(root.orderDetails.get(position).quantity_ordered);
+        holder.tvHistoryOrderStatus.setText(root.orderDetails.get(position).order_status);
+
     }
 
     @Override
     public int getItemCount() {
         return root.orderDetails.size();
     }
-
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         private CardView cvHistoryProductImage;
@@ -53,11 +56,13 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         private TextView tvHistoryProductCategory;
         private TextView tvHistoryProductPrice;
         private TextView tvHistoryOrderStatus;
+        private TextView tvHistoryProductQty;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             cvHistoryProductImage = itemView.findViewById(R.id.cv_history_product_image);
             ivHistoryProductImage = itemView.findViewById(R.id.iv_history_product_image);
+            tvHistoryProductQty = itemView.findViewById(R.id.tv_history_product_qty);
             tvHistoryProductTitle = itemView.findViewById(R.id.tv_history_product_title);
             tvHistoryProductCategory = itemView.findViewById(R.id.tv_history_product_category);
             tvHistoryProductPrice = itemView.findViewById(R.id.tv_history_product_price);

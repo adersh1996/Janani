@@ -80,6 +80,7 @@ public class UserKitAddressActivity extends AppCompatActivity {
                 editor.putString("optionalPhoneNumber", etPhoneNumber.getText().toString());
                 editor.apply();
                 startActivity(new Intent(getApplicationContext(), UserKitPaymentActivity.class));
+
             }
         });
 
@@ -205,6 +206,7 @@ public class UserKitAddressActivity extends AppCompatActivity {
                 } else {
                     etUserLocation.setVisibility(View.GONE);
                     btCurrentLocation.setEnabled(true);
+                    etUserLocation.setText("");
                     j = 0;
                 }
 

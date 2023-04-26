@@ -93,12 +93,18 @@ public class UserKitProductActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Server Failed", Toast.LENGTH_SHORT).show();
+                    shimmerLayoutUserKitHome.stopShimmer();
+                    shimmerLayoutUserKitHome.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_SHORT).show();
+                shimmerLayoutUserKitHome.stopShimmer();
+                shimmerLayoutUserKitHome.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
 
             }
         });

@@ -64,8 +64,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         scrollView.setVisibility(View.VISIBLE);
                     } else if (root.equals(null)) {
                         Toast.makeText(ShoppingCartActivity.this, "Shopping cart empty", Toast.LENGTH_SHORT).show();
-
+                        shimmerLayoutShoppingCart.stopShimmer();
+                        shimmerLayoutShoppingCart.setVisibility(View.GONE);
+                        scrollView.setVisibility(View.VISIBLE);
                     } else {
+
+                        shimmerLayoutShoppingCart.stopShimmer();
+                        shimmerLayoutShoppingCart.setVisibility(View.GONE);
+                        scrollView.setVisibility(View.VISIBLE);
                         Toast.makeText(ShoppingCartActivity.this, "shopping Cart failed", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -73,6 +79,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
+
+                shimmerLayoutShoppingCart.stopShimmer();
+                shimmerLayoutShoppingCart.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
                 Toast.makeText(ShoppingCartActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

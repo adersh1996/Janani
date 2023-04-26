@@ -72,6 +72,7 @@ public class FAQFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_f_a_q, container, false);
         initView(view);
+        rvFaqView.setNestedScrollingEnabled(false);
         faqApiDisplay();
 
         return view;
