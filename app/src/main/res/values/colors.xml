@@ -22,4 +22,6 @@
     <color name="grey">#E8E3E3</color>
     <color name="shimmer_color">#858282</color>
     <color name="oragne_txt">#FF9800</color>
+    <color name="pink_one">#FF8DC7</color>
+    <color name="white_one">#F6F1F1</color>
 </resources>
