@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.project.janani.shopping.R;
 import com.project.janani.shopping.model.Root;
@@ -33,6 +34,9 @@ public class SellerOrderHistoryAdapter extends RecyclerView.Adapter<SellerOrderH
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
+        holder.sellerProductName.setText(root.product_details.get(position).name);
+        Glide.with(context).load(root.product_details.get(position).image1).into(holder.sellerProductImage);
 
     }
 

@@ -55,6 +55,7 @@ public class SellerHomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Root root = response.body();
                     if (root.status) {
+                        Toast.makeText(getContext(), sellerId, Toast.LENGTH_SHORT).show();
                         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
                         sellerProductListRecyclerView.setLayoutManager(layoutManager);
                         SellerProductListAdapter sellerProductListAdapter = new SellerProductListAdapter(root, getActivity());

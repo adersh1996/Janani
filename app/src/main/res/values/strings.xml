@@ -12,7 +12,7 @@
     <string name="prompt_phone_number">Enter Your Phone Number</string>
     <string name="prompt_password">Enter The Password</string>
     <string name="account_switch_query">Login as a seller :</string>
-    <string name="button_login">Login</string>
+    <string name="button_login">LOGIN</string>
     <string name="registration">Registration</string>
     <string name="button_register">Register</string>
     <string name="text_register">Register as</string>
