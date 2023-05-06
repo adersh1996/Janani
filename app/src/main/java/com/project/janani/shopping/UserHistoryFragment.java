@@ -75,6 +75,7 @@ public class UserHistoryFragment extends Fragment {
         initView(view);
         callOrderHistory();
         return view;
+
     }
 
     private void callOrderHistory() {
@@ -83,7 +84,7 @@ public class UserHistoryFragment extends Fragment {
 
         SharedPreferences loginSharedPreferences = getActivity().getSharedPreferences("loginShared", getActivity().MODE_PRIVATE);
         String userId = loginSharedPreferences.getString("userId", "default");
-        orderHistoryApi.orderHistoryApiCall("1").enqueue(new Callback<Root>() {
+        orderHistoryApi.orderHistoryApiCall(userId).enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 Root root = response.body();

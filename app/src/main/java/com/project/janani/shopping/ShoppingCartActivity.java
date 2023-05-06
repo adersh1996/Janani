@@ -37,9 +37,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         scrollView.setVisibility(View.GONE);
         shimmerLayoutShoppingCart.startShimmer();
-
         rvShoppingCartItems.setNestedScrollingEnabled(false);
-
         SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
         String userId = loginSharedPreferences.getString("userId", "default");
         String total_amount = loginSharedPreferences.getString("total_amount", "default");
@@ -52,21 +50,33 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 Root root = response.body();
                 if (response.isSuccessful()) {
                     if (root.status) {
+
+                        String cart_id = root.orderDetails.get(0).cart_id;
+                        SharedPreferences saveCartId = getSharedPreferences("saveCartId", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = saveCartId.edit();
+                        editor.putString("select_cart_id", cart_id);
+                        editor.apply();
+
+
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                         rvShoppingCartItems.setLayoutManager(linearLayoutManager);
                         ShoppingCartAdapter shoppingCartAdapter = new ShoppingCartAdapter(getApplicationContext(), root);
                         rvShoppingCartItems.setAdapter(shoppingCartAdapter);
-
-                        btPlaceOrderButton.setText("Pay ₹ " + root.orderDetails.get(0).total_amount);
+                        int total_amount = 0;
+                        for (int i = 0; i < root.orderDetails.size(); i++) {
+                            total_amount += root.orderDetails.get(i).total_amount;
+                        }
+                        btPlaceOrderButton.setText("Pay ₹ " + total_amount);
 
                         shimmerLayoutShoppingCart.stopShimmer();
                         shimmerLayoutShoppingCart.setVisibility(View.GONE);
                         scrollView.setVisibility(View.VISIBLE);
-                    } else if (root.equals(null)) {
-                        Toast.makeText(ShoppingCartActivity.this, "Shopping cart empty", Toast.LENGTH_SHORT).show();
-                        shimmerLayoutShoppingCart.stopShimmer();
-                        shimmerLayoutShoppingCart.setVisibility(View.GONE);
-                        scrollView.setVisibility(View.VISIBLE);
+
+//                    }else if (root.equals(null)) {
+//                        Toast.makeText(ShoppingCartActivity.this, "Shopping cart empty", Toast.LENGTH_SHORT).show();
+//                        shimmerLayoutShoppingCart.stopShimmer();
+//                        shimmerLayoutShoppingCart.setVisibility(View.GONE);
+//                        scrollView.setVisibility(View.VISIBLE);
                     } else {
 
                         shimmerLayoutShoppingCart.stopShimmer();
@@ -75,6 +85,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         Toast.makeText(ShoppingCartActivity.this, "shopping Cart failed", Toast.LENGTH_SHORT).show();
                     }
                 }
+
             }
 
             @Override

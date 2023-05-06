@@ -18,9 +18,12 @@ import java.util.ArrayList;
 public class EnterAddressActivity extends AppCompatActivity {
     public static ArrayList<SavedAddressClass> mExampleList;
     private EditText etUserName;
-    private EditText etUserLocation;
+    private EditText etUserAddress;
     private EditText etPhoneNumber;
     private Button btAddLocationButton;
+    private EditText etUserPincode;
+    private EditText etUserCity;
+    private EditText etUserState;
 
     public EnterAddressActivity() {
     }
@@ -41,12 +44,11 @@ public class EnterAddressActivity extends AppCompatActivity {
     }
 
     private void setInsertButton() {
-        Toast.makeText(this, "Entering setInsertButton", Toast.LENGTH_SHORT).show();
         btAddLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                insertItem(etUserName.getText().toString(), etUserLocation.getText().toString(), etPhoneNumber.getText().toString());
+                insertItem(etUserName.getText().toString(), etUserAddress.getText().toString(), etUserPincode.getText().toString(), etUserCity.getText().toString(), etUserState.getText().toString(), etPhoneNumber.getText().toString());
                 saveData();
                 startActivity(new Intent(getApplicationContext(), SelectAddressActivity.class));
             }
@@ -65,8 +67,8 @@ public class EnterAddressActivity extends AppCompatActivity {
         Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
     }
 
-    private void insertItem(String userName, String userAddress, String userPhoneNumber) {
-        mExampleList.add(new SavedAddressClass(userName, userAddress, userPhoneNumber));
+    private void insertItem(String userName, String userAddress, String userPinCode, String userCity, String userState, String userPhoneNumber) {
+        mExampleList.add(new SavedAddressClass(userName, userAddress, userPinCode, userCity, userState, userPhoneNumber));
         SavedAddressAdapter savedAddressAdapter = new SavedAddressAdapter();
         savedAddressAdapter.notifyItemInserted(mExampleList.size());
     }
@@ -74,8 +76,11 @@ public class EnterAddressActivity extends AppCompatActivity {
     private void initView() {
 
         etUserName = findViewById(R.id.et_user_name);
-        etUserLocation = findViewById(R.id.et_user_location);
+        etUserAddress = findViewById(R.id.et_user_address);
         etPhoneNumber = findViewById(R.id.et_phone_number);
         btAddLocationButton = findViewById(R.id.bt_add_location_button);
+        etUserPincode = findViewById(R.id.et_user_pincode);
+        etUserCity = findViewById(R.id.et_user_city);
+        etUserState = findViewById(R.id.et_user_state);
     }
 }

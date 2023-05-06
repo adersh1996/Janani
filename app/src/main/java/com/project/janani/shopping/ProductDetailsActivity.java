@@ -38,6 +38,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     private TextView btAddToCart;
     private TextView tvProductSellingPrice;
     private TextView tvMrpRsSymbol;
+
     private ImageButton ibSaveButton;
     public static String productId;
     int i = 0;
@@ -58,6 +59,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_product_details);
         initView();
 
+        SharedPreferences productIdSave = getSharedPreferences("save productId", MODE_PRIVATE);
+        SharedPreferences.Editor editor = productIdSave.edit();
+        editor.putString("product_id", productId);
+        editor.apply();
         shimmerFrameLayout.startShimmer();
 
 
@@ -100,18 +105,23 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             @Override
             public void onClick(View view) {
 
-                SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
-                String data = loginSharedPreferences.getString("userId", "default");
                 APIInterface apiAddToCart = APIClient.getClient().create(APIInterface.class);
-                apiAddToCart.addToCartApiCall(productId, data, String.valueOf(npQuantityPicker.getValue())).enqueue(new Callback<Root>() {
+
+                SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
+                String user_id = loginSharedPreferences.getString("userId", "default");
+
+                apiAddToCart.addToCartApiCall(productId, user_id, String.valueOf(npQuantityPicker.getValue())).enqueue(new Callback<Root>() {
+
                     @Override
                     public void onResponse(Call<Root> call, Response<Root> response) {
+
+
                         Root root = response.body();
                         if (response.isSuccessful()) {
                             if (root.status) {
                                 Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
-                                finish();
+                                finishAffinity();
                             } else {
                                 Toast.makeText(ProductDetailsActivity.this, "adding failed", Toast.LENGTH_SHORT).show();
                             }
@@ -120,7 +130,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                     @Override
                     public void onFailure(Call<Root> call, Throwable t) {
-                        Toast.makeText(ProductDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductDetailsActivity.this, "hellot" + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -147,10 +157,74 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         if (i == 0) {
             ibSaveButton.setBackgroundColor(Color.parseColor("#EE0D5C"));
             i++;
+            addToWishList();
+
         } else if (i == 1) {
             ibSaveButton.setBackgroundColor(Color.parseColor("#D5CEA3"));
             i = 0;
+            SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
+            String user_id = loginSharedPreferences.getString("userId", "default");
+            removeFromWishList(user_id);
 
         }
     }
+
+    public void removeFromWishList(String user_id) {
+
+        APIInterface apiRemoveFromWishlist = APIClient.getClient().create(APIInterface.class);
+
+
+        apiRemoveFromWishlist.removeFromWishListApiCall(productId, user_id).enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                Root root = response.body();
+                if (response.isSuccessful()) {
+                    if (root.status) {
+                        Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ProductDetailsActivity.this, "unable to remove", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(ProductDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void addToWishList() {
+
+        APIInterface addToWishListApi = APIClient.getClient().create(APIInterface.class);
+
+
+        SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
+        String user_id = loginSharedPreferences.getString("userId", "default");
+
+        addToWishListApi.addToWishListApiCall(productId, user_id).enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                Root root = response.body();
+                if (response.isSuccessful()) {
+                    if (root.status) {
+                        Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ProductDetailsActivity.this, "Adding to wishlist failed", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(ProductDetailsActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

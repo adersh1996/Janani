@@ -64,7 +64,7 @@ public class UserRegistration extends AppCompatActivity implements Validator.Val
     private EditText etPassword;
     @ConfirmPassword(message = "Passwords does not match!")
     private EditText etConfirmPassword;
-    private Button btRegisterButton;
+    private TextView btRegisterButton;
 
     private File proImageFile;
     private Validator validator;
@@ -81,12 +81,12 @@ public class UserRegistration extends AppCompatActivity implements Validator.Val
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        cvDpEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imageChooser();
-            }
-        });
+//        cvDpEditButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                imageChooser();
+//            }
+//        });
 
 
     }
@@ -133,15 +133,14 @@ public class UserRegistration extends AppCompatActivity implements Validator.Val
 //                ivDisplayImage.setImageBitmap(photo);
 //
 //            } catch (Exception e) {
-//                Toast.makeText(this, "Unable", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Unable to pick", Toast.LENGTH_SHORT).show();
 //
 //            }
 //        }
     }
 
     private void initView() {
-        ivDisplayImage = findViewById(R.id.iv_display_image);
-        cvDpEditButton = findViewById(R.id.cv_dp_edit_button);
+
         etUserName = findViewById(R.id.et_user_name);
         etPhoneNumber = findViewById(R.id.et_phone_number);
         etUserAge = findViewById(R.id.et_user_age);

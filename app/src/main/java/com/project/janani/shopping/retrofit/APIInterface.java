@@ -61,9 +61,7 @@ public interface APIInterface {
 
     @FormUrlEncoded
     @POST("add_cart.php")
-    Call<Root> addToCartApiCall(@Field("product_id") String product_id,
-                                @Field("user_id") String user_id,
-                                @Field("qty") String quantity);
+    Call<Root> addToCartApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id, @Field("qty") String quantity);
 
 
     @FormUrlEncoded
@@ -82,14 +80,14 @@ public interface APIInterface {
 
     @Multipart
     @POST("add_product.php")
-    Call<Root> addProductSellerApiCall(@Part("seller_id")RequestBody sellerId,@Part("name")RequestBody name,
-                                       @Part("description")RequestBody description,@Part("mrp")RequestBody mrp,
-                                       @Part("selling_price")RequestBody sellingPrice,@Part("qty")RequestBody quantity,
-                                       @Part MultipartBody.Part image1,@Part MultipartBody.Part image2,
-                                       @Part MultipartBody.Part image3,@Part MultipartBody.Part video1);
+    Call<Root> addProductSellerApiCall(@Part("seller_id") RequestBody sellerId, @Part("name") RequestBody name,
+                                       @Part("description") RequestBody description, @Part("mrp") RequestBody mrp,
+                                       @Part("selling_price") RequestBody sellingPrice, @Part("qty") RequestBody quantity,
+                                       @Part MultipartBody.Part image1, @Part MultipartBody.Part image2,
+                                       @Part MultipartBody.Part image3, @Part MultipartBody.Part video1);
 
     @FormUrlEncoded
-    @POST("seller_order_history.php")
+    @POST("view_products.php")
     Call<Root> viewOrderHistorySellerApiCall(@Field("seller_id") String sellerId);
 
 
@@ -98,22 +96,34 @@ public interface APIInterface {
     Call<Root> categoryFilterApiCall(@Field("category") String category);
 
     @FormUrlEncoded
-    @POST("delete_cart.php")
-    Call<Root> removeItemApiCall(@Field("cart_id") String cart_id);
+    @POST("remove_item_from_cart.php")
+    Call<Root> removeItemApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id);
 
     @FormUrlEncoded
     @POST("search_product.php")
     Call<Root> searchItemApiCall(@Field("term") String term);
 
     @FormUrlEncoded
+    @POST("add_wishlist.php")
+    Call<Root> addToWishListApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id);
+
+    @FormUrlEncoded
     @POST("kit_button.php")
-    Call<Root> userKitCheckOutApiCall(@Field("user_id") String user_id,
-                                      @Field("lat") String latitude,
-                                      @Field("log") String longitude,
-                                      @Field("address") String address,
-                                      @Field("phone") String phone,
-                                      @Field("category") String category,
-                                      @Field("product_id") String product_id);
+    Call<Root> userKitCheckOutApiCall(@Field("user_id") String user_id, @Field("lat") String latitude, @Field("log") String longitude, @Field("address") String address, @Field("phone") String phone, @Field("category") String category, @Field("product_id") String product_id);
+
+    @FormUrlEncoded
+    @POST("place_order.php")
+    Call<Root> placeOrderAPiCall(@Field("user_id") String user_id,
+                                 @Field("customer_name") String customer_name,
+                                 @Field("address") String address,
+                                 @Field("pin_code") String pin_code,
+                                 @Field("phone") String phone,
+                                 @Field("city") String city,
+                                 @Field("state") String state,
+                                 @Field("cart_id") String cart_id);
+
+    @POST("view_wishlist.php")
+    Call<Root> viewWishListApiCall();
 
     @FormUrlEncoded
     @POST("add_cart.php")
@@ -125,5 +135,8 @@ public interface APIInterface {
 //    @POST("seller_login.php")
 //    Call<Root>sellerLoginApiCall(@Field("phone")String phone)
 
+
+    @POST("remove_from_wishlist.php")
+    Call<Root> removeFromWishListApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id);
 
 }

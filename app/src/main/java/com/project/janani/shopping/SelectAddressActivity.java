@@ -56,10 +56,23 @@ public class SelectAddressActivity extends AppCompatActivity {
             public void onClick(View view) {
                 APIInterface apiPlaceOrder = APIClient.getClient().create(APIInterface.class);
                 SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
-                String userID = loginSharedPreferences.getString("userId", "default");
-                String productID = loginSharedPreferences.getString("productID", "default");
+                String user_id = loginSharedPreferences.getString("userId", "default");
+                String product_id = loginSharedPreferences.getString("productID", "default");
                 String quantity = loginSharedPreferences.getString("quantity", "default");
-                apiPlaceOrder.placeOrderAPiCall(productID, userID, quantity).enqueue(new Callback<Root>() {
+
+                SharedPreferences selectAddressPreference = getSharedPreferences("selectAddress", MODE_PRIVATE);
+                String user_name = selectAddressPreference.getString("select_username", "default");
+                String user_address = selectAddressPreference.getString("select_address", "default");
+                String user_pin_code = selectAddressPreference.getString("select_pin_code", "default");
+                String user_city = selectAddressPreference.getString("select_city", "default");
+                String user_state = selectAddressPreference.getString("select_state", "default");
+                String user_phone_number = selectAddressPreference.getString("select_phone_number", "default");
+
+                SharedPreferences saveCartId = getSharedPreferences("saveCartId", MODE_PRIVATE);
+                String cart_id = saveCartId.getString("select_cart_id", "default");
+
+
+                apiPlaceOrder.placeOrderAPiCall(user_id, user_name, user_address, user_pin_code, user_phone_number, user_city, user_state, "7").enqueue(new Callback<Root>() {
                     @Override
                     public void onResponse(Call<Root> call, Response<Root> response) {
                         Root root = response.body();
