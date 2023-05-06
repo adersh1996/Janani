@@ -6,10 +6,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +19,6 @@ import com.project.janani.shopping.R;
 import com.project.janani.shopping.model.Root;
 import com.project.janani.shopping.retrofit.APIClient;
 import com.project.janani.shopping.retrofit.APIInterface;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,28 +54,35 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
         SharedPreferences loginSharedPreferences = context.getSharedPreferences("loginShared", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = loginSharedPreferences.edit();
-        editor.putString("total_amount", root.orderDetails.get(position).total_amount);
+        editor.putString("total_amount", String.valueOf(root.orderDetails.get(position).total_amount));
         editor.putString("quantity", String.valueOf(root.orderDetails.get(position).quantity_ordered));
         editor.apply();
 
         holder.cvRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeItem();
+                Toast.makeText(context, position + "hello ", Toast.LENGTH_SHORT).show();
+                removeItem(position);
+
+
+
             }
         });
 
     }
 
-    private void removeItem() {
+    private void removeItem(int position) {
         APIInterface removeItemAPI = APIClient.getClient().create(APIInterface.class);
-        removeItemAPI.removeItemApiCall("4").enqueue(new Callback<Root>() {
+        SharedPreferences loginSharedPreferences = context.getSharedPreferences("loginShared", context.MODE_PRIVATE);
+        String userId = loginSharedPreferences.getString("userId", "default");
+        removeItemAPI.removeItemApiCall(root.orderDetails.get(position).product_id, userId).enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 Root newRoot = response.body();
                 if (response.isSuccessful()) {
                     if (newRoot.status) {
                         Toast.makeText(context, newRoot.message, Toast.LENGTH_SHORT).show();
+
                     } else {
                         Toast.makeText(context, newRoot.message, Toast.LENGTH_SHORT).show();
                     }
@@ -122,8 +124,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             tvProductPrice = itemView.findViewById(R.id.tv_product_price);
             cvRemoveButton = itemView.findViewById(R.id.cv_remove_button);
             tvQuantity = itemView.findViewById(R.id.tv_quantity);
-
-
         }
     }
 }

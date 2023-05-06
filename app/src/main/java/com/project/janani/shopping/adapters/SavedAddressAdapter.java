@@ -1,6 +1,7 @@
 package com.project.janani.shopping.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,24 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
         holder.tvDisplayUsername.setText(currentItem.getUserName());
         holder.tvDisplayUserAddress.setText(currentItem.getUserAddress());
         holder.tvDisplayUserPhone.setText(currentItem.getUserPhoneNumber());
+        holder.tvDisplayUserPinCode.setText(currentItem.getUserPinCode());
+        holder.tvDisplayUserCity.setText(currentItem.getUserCity());
+        holder.tvDisplayUserState.setText(currentItem.getUserState());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences selectAddressPreference = context.getSharedPreferences("selectAddress", context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = selectAddressPreference.edit();
+                editor.putString("select_username", currentItem.getUserName());
+                editor.putString("select_address", currentItem.getUserAddress());
+                editor.putString("select_pin_code", currentItem.getUserPinCode());
+                editor.putString("select_city", currentItem.getUserCity());
+                editor.putString("select_state", currentItem.getUserState());
+                editor.putString("select_phone_number", currentItem.getUserPhoneNumber());
+                editor.apply();
+            }
+        });
     }
 
     @Override
@@ -53,6 +72,9 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
         TextView tvDisplayUsername;
         TextView tvDisplayUserAddress;
         TextView tvDisplayUserPhone;
+        TextView tvDisplayUserPinCode;
+        TextView tvDisplayUserCity;
+        TextView tvDisplayUserState;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +85,9 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
             tvDisplayUsername = itemView.findViewById(R.id.tv_display_username);
             tvDisplayUserAddress = itemView.findViewById(R.id.tv_display_user_address);
             tvDisplayUserPhone = itemView.findViewById(R.id.tv_display_user_phone);
+            tvDisplayUserPinCode = itemView.findViewById(R.id.tv_display_user_pin_code);
+            tvDisplayUserCity = itemView.findViewById(R.id.tv_display_user_city);
+            tvDisplayUserState = itemView.findViewById(R.id.tv_display_user_state);
         }
     }
 }

@@ -44,15 +44,55 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/et_user_location"
+            android:id="@+id/et_user_address"
             android:layout_width="350dp"
-            android:layout_height="200dp"
+            android:layout_height="50dp"
             android:layout_below="@id/et_user_name"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/main_layout_background"
+            android:textSize="20sp"
+            android:background="@drawable/view_background"
             android:gravity="start"
-            android:hint="Enter Your Location"
+            android:hint="Enter Your Address"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp" />
+        <EditText
+            android:id="@+id/et_user_pincode"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/et_user_address"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:background="@drawable/view_background"
+            android:gravity="start"
+            android:hint="Enter Your Pin Code"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp" />
+        <EditText
+            android:id="@+id/et_user_city"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/et_user_pincode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:background="@drawable/view_background"
+            android:gravity="start"
+            android:hint="Enter Your City"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp" />
+        <EditText
+            android:id="@+id/et_user_state"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/et_user_city"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:background="@drawable/view_background"
+            android:gravity="start"
+            android:hint="Enter Your State"
             android:paddingLeft="10dp"
             android:paddingTop="15dp" />
 
@@ -60,7 +100,7 @@
             android:id="@+id/et_phone_number"
             android:layout_width="350dp"
             android:layout_height="50dp"
-            android:layout_below="@id/et_user_location"
+            android:layout_below="@id/et_user_state"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/view_background"

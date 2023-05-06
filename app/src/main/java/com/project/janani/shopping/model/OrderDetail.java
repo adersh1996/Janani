@@ -11,8 +11,10 @@ public class OrderDetail {
     public String quantity_ordered;
     public Object total_price;
     public String total_count;
-    public String total_amount;
+    public int total_amount;
 
     public String total_payable;
     public String order_status;
+
+    public String cart_id;
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.project.janani.shopping.adapters.WishlistAdapter;
+import com.project.janani.shopping.model.Root;
+import com.project.janani.shopping.retrofit.APIClient;
+import com.project.janani.shopping.retrofit.APIInterface;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,10 +88,25 @@ public class UserWishlistFragment extends Fragment {
         String userName = loginSharedPreference.getString("userName", "default");
         tvUserName.setText(userName);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        rvWishlistItems.setLayoutManager(linearLayoutManager);
-        WishlistAdapter wishlistAdapter = new WishlistAdapter(getActivity());
-        rvWishlistItems.setAdapter(wishlistAdapter);
+        APIInterface apiViewWishList = APIClient.getClient().create(APIInterface.class);
+        apiViewWishList.viewWishListApiCall().enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                Root root = response.body();
+                if (response.isSuccessful()) {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                    rvWishlistItems.setLayoutManager(linearLayoutManager);
+                    WishlistAdapter wishlistAdapter = new WishlistAdapter(getActivity(),root );
+                    rvWishlistItems.setAdapter(wishlistAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return view;
     }
