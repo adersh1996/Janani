@@ -173,6 +173,16 @@ public interface APIInterface {
     Call<Root> viewWishListApiCall();
 
     @FormUrlEncoded
+    @POST("add_cart.php")
+    Call<Root> placeOrderAPiCall(@Field("product_id") String product_id,
+                                 @Field("user_id") String user_id,
+                                 @Field("qty") String quantity);
+
+//    @FormUrlEncoded
+//    @POST("seller_login.php")
+//    Call<Root>sellerLoginApiCall(@Field("phone")String phone)
+
+
     @POST("remove_from_wishlist.php")
     Call<Root> removeFromWishListApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id);
 
