@@ -1,18 +1,25 @@
 package com.project.janani.shopping;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +59,13 @@ public class UserHomeFragment extends Fragment {
     private FloatingActionButton btUserKitButton;
     public static String data;
     private ImageView ivSearchButton;
+    private TextView tvCategorySanitaryPad;
+    private TextView tvCategoryPeriodUnderwear;
+    private TextView tvCategoryTampons;
+    private TextView tvCategoryMenstrualCups;
+    private TextView tvErrorMsg;
+    private TextView tvAllCategories;
+    private FrameLayout frameLayout;
 
     public UserHomeFragment() {
         // Required empty public constructor
@@ -96,8 +110,86 @@ public class UserHomeFragment extends Fragment {
 
         SharedPreferences categorySharedPreference = getActivity().getSharedPreferences("category select", Context.MODE_PRIVATE);
         data = categorySharedPreference.getString("category", "default");
+        PadsFragment padsFragment = new PadsFragment();
 
-        categoryViewDisplay();
+        tvAllCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvAllCategories.setTextColor(Color.parseColor("#757070"));
+                tvAllCategories.setBackgroundColor(Color.parseColor("#5FCCA2"));
+                tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryMenstrualCups.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryTampons.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#ffffff"));
+                productViewDisplay();
+            }
+        });
+
+        tvCategorySanitaryPad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvCategorySanitaryPad.setTextColor(Color.parseColor("#757070"));
+                tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#5FCCA2"));
+                tvAllCategories.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryMenstrualCups.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryTampons.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#ffffff"));
+                String category = tvCategorySanitaryPad.getText().toString();
+
+                displayProduct(category);
+//                tvCategorySanitaryPad.setTextColor(Color.parseColor("#757070"));
+//                tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#5FCCA2"));
+//                rvProductListView.setVisibility(View.GONE);
+//                frameLayout.setVisibility(View.VISIBLE);
+//                FragmentManager manager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction transaction = manager.beginTransaction();
+//                transaction.replace(R.id.frame_layout, padsFragment);
+//                transaction.addToBackStack("");
+//                transaction.commit();
+            }
+        });
+
+        tvCategoryMenstrualCups.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvCategoryMenstrualCups.setTextColor(Color.parseColor("#757070"));
+                tvCategoryMenstrualCups.setBackgroundColor(Color.parseColor("#5FCCA2"));
+                tvAllCategories.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryTampons.setBackgroundColor(Color.parseColor("#ffffff"));
+                String category = tvCategoryMenstrualCups.getText().toString();
+                displayProduct(category);
+            }
+        });
+
+        tvCategoryPeriodUnderwear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvCategoryPeriodUnderwear.setTextColor(Color.parseColor("#757070"));
+                tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#5FCCA2"));
+                tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvAllCategories.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryMenstrualCups.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryTampons.setBackgroundColor(Color.parseColor("#ffffff"));
+                String category = tvCategoryPeriodUnderwear.getText().toString();
+                displayProduct(category);
+            }
+        });
+
+        tvCategoryTampons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvCategoryTampons.setTextColor(Color.parseColor("#757070"));
+                tvCategoryTampons.setBackgroundColor(Color.parseColor("#5FCCA2"));
+                tvAllCategories.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryMenstrualCups.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+        });
+
+//        categoryViewDisplay();
         productViewDisplay();
 
         ivSearchButton.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +234,7 @@ public class UserHomeFragment extends Fragment {
                         rvProductListView.setAdapter(userProductListAdapter);
                         shimmerFrameLayout.stopShimmer();
                         shimmerFrameLayout.setVisibility(View.GONE);
-                        scrollView.setVisibility(View.VISIBLE);
+                        scrollView.setVisibility(VISIBLE);
 //                        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
 //                        rvProductListView.setLayoutManager(layoutManager);
 //                        SellerProductListAdapter sellerProductListAdapter = new SellerProductListAdapter(root, getActivity());
@@ -157,7 +249,7 @@ public class UserHomeFragment extends Fragment {
                     Toast.makeText(getActivity(), "Server Failed", Toast.LENGTH_SHORT).show();
                     shimmerFrameLayout.stopShimmer();
                     shimmerFrameLayout.setVisibility(View.GONE);
-                    scrollView.setVisibility(View.VISIBLE);
+                    scrollView.setVisibility(VISIBLE);
                 }
             }
 
@@ -166,7 +258,7 @@ public class UserHomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
                 shimmerFrameLayout.stopShimmer();
                 shimmerFrameLayout.setVisibility(View.GONE);
-                scrollView.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(VISIBLE);
 
             }
         });
@@ -197,14 +289,53 @@ public class UserHomeFragment extends Fragment {
         });
     }
 
+    private void displayProduct(String category) {
+
+        APIInterface apiCategoryFilterCAll = APIClient.getClient().create(APIInterface.class);
+        apiCategoryFilterCAll.productCategoryFilterApiCall(category).enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                Root root = response.body();
+                if (response.isSuccessful()) {
+                    if (root.status) {
+                        tvErrorMsg.setVisibility(View.GONE);
+                        rvProductListView.setVisibility(View.VISIBLE);
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+                        rvProductListView.setLayoutManager(gridLayoutManager);
+                        UserProductListAdapter userProductListAdapter = new UserProductListAdapter(getActivity(), root);
+                        rvProductListView.setAdapter(userProductListAdapter);
+                    } else {
+                        tvErrorMsg.setVisibility(View.VISIBLE);
+                        rvProductListView.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), "Products Unavailable!", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void initView(View view) {
 
         etSearchBar = view.findViewById(R.id.et_search_bar);
-        rvCategoriesView = view.findViewById(R.id.rv_categories_view);
+//        rvCategoriesView = view.findViewById(R.id.rv_categories_view);
         rvProductListView = view.findViewById(R.id.rv_product_list_view);
         btUserKitButton = view.findViewById(R.id.bt_user_kit_button);
         ivSearchButton = view.findViewById(R.id.iv_search_button);
         scrollView = view.findViewById(R.id.scroll_view);
         shimmerFrameLayout = view.findViewById(R.id.sl_user_home_shimmer_layout);
+        tvCategorySanitaryPad = view.findViewById(R.id.tv_category_sanitary_pad);
+        tvCategoryPeriodUnderwear = view.findViewById(R.id.tv_category_period_underwear);
+        tvCategoryTampons = view.findViewById(R.id.tv_category_tampons);
+        tvCategoryMenstrualCups = view.findViewById(R.id.tv_category_menstrual_cups);
+        frameLayout = view.findViewById(R.id.frame_layout);
+        tvErrorMsg = view.findViewById(R.id.tv_error_message);
+        tvAllCategories = view.findViewById(R.id.tv_all_category);
     }
 }

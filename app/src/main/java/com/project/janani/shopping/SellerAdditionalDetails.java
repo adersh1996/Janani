@@ -42,7 +42,7 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
     private EditText etBranchAddress;
     @NotEmpty(message = "Please enter your IFSC code")
     private EditText etIFSCCode;
-    private Button btRegisterSellerButton;
+    private TextView btRegisterSellerButton;
     private Validator validator;
     protected boolean validated;
     private static boolean switchState;

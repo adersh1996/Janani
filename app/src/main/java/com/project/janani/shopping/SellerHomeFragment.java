@@ -39,7 +39,7 @@ public class SellerHomeFragment extends Fragment {
         sellerAddProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(getActivity(),SellerAddProductActivity.class);
+                Intent intent = new Intent(getActivity(), SellerAddProductActivity.class);
                 startActivity(intent);
             }
         });
@@ -73,7 +73,7 @@ public class SellerHomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
-                Toast.makeText(getActivity(), "Server Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "server error" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });

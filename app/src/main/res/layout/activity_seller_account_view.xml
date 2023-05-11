@@ -16,8 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:elevation="10dp"
             app:cardCornerRadius="20dp">
 
@@ -120,7 +120,7 @@
                     android:drawablePadding="10dp"
                     android:text="Your License Number"
                     android:gravity="center_vertical"
-                    android:paddingLeft="25dp"
+                    android:paddingLeft="30dp"
                     android:paddingRight="10dp"
                     android:textColor="@color/text_color"
                     android:textSize="20sp" />
@@ -132,6 +132,8 @@
                     android:layout_below="@id/tv_company_address"
                     android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/baseline_remove_red_eye_24"
+                    android:drawablePadding="10dp"
+                    android:text="Your License Number"
                     android:gravity="center_vertical"
                     android:paddingLeft="20dp"
                     android:paddingRight="10dp"
@@ -148,6 +150,8 @@
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="UserKit feature is available"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
                     android:textStyle="bold|italic"
                     android:textColor="@color/text_color"
                     android:textSize="20sp" />

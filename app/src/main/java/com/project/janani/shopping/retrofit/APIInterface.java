@@ -20,6 +20,11 @@ public interface APIInterface {
     Call<Root> CALL_APIUserLogin(@Part("mobile") RequestBody phone_number,
                                  @Part("password") RequestBody password);
 
+    @Multipart
+    @POST("seller_login.php")
+    Call<Root> CALL_APISellerLogin(@Part("phone") RequestBody phone_number,
+                                 @Part("password") RequestBody password);
+
 
     @Multipart
     @POST("user_reg.php")
@@ -31,6 +36,18 @@ public interface APIInterface {
             @Part("password") RequestBody password,
             @Part("device_token") RequestBody deviceToken
     );
+
+    @Multipart
+    @POST("edit_user.php")
+    Call<Root> CALL_API_User_Edit_Account(
+            @Part("name") RequestBody name,
+            @Part("id") String id,
+            @Part("age") RequestBody age,
+            @Part("email") RequestBody email,
+            @Part("mobile") RequestBody mobile,
+            @Part("password") RequestBody password
+    );
+
 
     @Multipart
     @POST("seller_reg.php")
@@ -47,6 +64,17 @@ public interface APIInterface {
                                             @Part("userKit") RequestBody user_kit
     );
 
+    @Multipart
+    @POST("edit_seller.php")
+    Call<Root> CALL_API_Seller_Edit_Account(@Part("id") String id,
+                                            @Part("name") RequestBody name,
+                                            @Part("address") RequestBody address,
+                                            @Part("phone") RequestBody phone,
+                                            @Part("email") RequestBody email,
+                                            @Part("user_kit") RequestBody user_kit,
+                                            @Part("password") RequestBody password,
+                                            @Part("license_num") RequestBody license_number);
+
     @FormUrlEncoded
     @POST("view_product_seller_id.php")
     Call<Root> viewProductsSellerApiCall(@Field("seller_id") String sellerId);
@@ -54,6 +82,10 @@ public interface APIInterface {
 
     @POST("view_products.php")
     Call<Root> viewProductsUserApiCall();
+
+    @FormUrlEncoded
+    @POST("product_filter.php")
+    Call<Root> productCategoryFilterApiCall(@Field("category") String category);
 
     @FormUrlEncoded
     @POST("view_product_byProduct_id.php")
@@ -68,11 +100,22 @@ public interface APIInterface {
     @POST("view_cart.php")
     Call<Root> viewCartApiCall(@Field("user_id") String user_id);
 
+    @FormUrlEncoded
+    @POST("view_user.php")
+    Call<Root> viewUserAccountApiCall(@Field("userid") String userid);
+
+    @FormUrlEncoded
+    @POST("view_seller.php")
+    Call<Root> viewSellerAccountApiCall(@Field("sellerid") String sellerid);
+
     @POST("view_category.php")
     Call<Root> categoryListApiCall();
 
     @POST("view_faq.php")
     Call<Root> faqApiCall();
+
+    @POST("dietchart.php")
+    Call<Root> dietChartCall();
 
     @FormUrlEncoded
     @POST("order_history.php")
@@ -87,8 +130,8 @@ public interface APIInterface {
                                        @Part MultipartBody.Part image3, @Part MultipartBody.Part video1);
 
     @FormUrlEncoded
-    @POST("view_products.php")
-    Call<Root> viewOrderHistorySellerApiCall(@Field("seller_id") String sellerId);
+    @POST("seller_order_history.php")
+    Call<Root> viewOrderHistorySellerApiCall(@Field("seller_id") String seller_id);
 
 
     @FormUrlEncoded
@@ -98,6 +141,10 @@ public interface APIInterface {
     @FormUrlEncoded
     @POST("remove_item_from_cart.php")
     Call<Root> removeItemApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("loyalty.php")
+    Call<Root> updatePriceApiCall(@Field("product_id") String product_id, @Field("selling_price") String selling_price);
 
     @FormUrlEncoded
     @POST("search_product.php")

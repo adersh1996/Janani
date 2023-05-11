@@ -1,7 +1,5 @@
 package com.project.janani.shopping;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +8,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.project.janani.shopping.adapters.DietChartAdapter;
 import com.project.janani.shopping.model.Root;
 import com.project.janani.shopping.retrofit.APIClient;
 import com.project.janani.shopping.retrofit.APIInterface;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,10 +24,10 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserAccountFragment#newInstance} factory method to
+ * Use the {@link DietChartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserAccountFragment extends Fragment {
+public class DietChartFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,13 +37,10 @@ public class UserAccountFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private TextView tvUserName;
-    private TextView tvPhoneNumber;
-    private TextView tvUserAge;
-    private TextView tvEmailId;
-    private TextView btEditAccountButton;
+    private RecyclerView rvDietChart;
 
-    public UserAccountFragment() {
+
+    public DietChartFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +50,11 @@ public class UserAccountFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment UserAccountFragment.
+     * @return A new instance of fragment DietChartFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserAccountFragment newInstance(String param1, String param2) {
-        UserAccountFragment fragment = new UserAccountFragment();
+    public static DietChartFragment newInstance(String param1, String param2) {
+        DietChartFragment fragment = new DietChartFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,42 +74,27 @@ public class UserAccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_account, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_diet_chart, container, false);
         initView(view);
-        SharedPreferences loginSharedPreferences = getActivity().getSharedPreferences("loginShared", getActivity().MODE_PRIVATE);
-        String userId = loginSharedPreferences.getString("userId", "default");
-        viewUserAccount(userId);
-        btEditAccountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToEditDetails(userId);
-            }
-        });
+        rvDietChart.setNestedScrollingEnabled(false);
+        dietChartApiCall();
+
         return view;
     }
 
-    private void goToEditDetails(String userId) {
-        Intent intent = new Intent(getActivity(), UserEditAccountActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("userId", userId);
-        getActivity().startActivity(intent);
-    }
-
-    private void viewUserAccount(String userId) {
-
-        APIInterface apiUserAccountView = APIClient.getClient().create(APIInterface.class);
-        apiUserAccountView.viewUserAccountApiCall(userId).enqueue(new Callback<Root>() {
+    private void dietChartApiCall() {
+        APIInterface apiDietChartApi = APIClient.getClient().create(APIInterface.class);
+        apiDietChartApi.dietChartCall().enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 Root root = response.body();
                 if (response.isSuccessful()) {
                     if (root.status) {
-                        tvUserName.setText(root.userDetails.get(0).name);
-                        tvPhoneNumber.setText(root.userDetails.get(0).mobile);
-                        tvEmailId.setText(root.userDetails.get(0).email);
-                        tvUserAge.setText(root.userDetails.get(0).age);
-                    } else {
-                        Toast.makeText(getActivity(), "Account view failed", Toast.LENGTH_SHORT).show();
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                        DietChartAdapter dietChartAdapter = new DietChartAdapter(getActivity(), root);
+                        rvDietChart.setLayoutManager(linearLayoutManager);
+                        rvDietChart.setAdapter(dietChartAdapter);
                     }
                 }
             }
@@ -122,10 +107,6 @@ public class UserAccountFragment extends Fragment {
     }
 
     private void initView(View view) {
-        tvUserName = view.findViewById(R.id.tv_user_name);
-        tvPhoneNumber = view.findViewById(R.id.tv_phone_number);
-        tvUserAge = view.findViewById(R.id.tv_user_age);
-        tvEmailId = view.findViewById(R.id.tv_email_id);
-        btEditAccountButton = view.findViewById(R.id.bt_edit_account_button);
+        rvDietChart = view.findViewById(R.id.rv_diet_chart);
     }
 }

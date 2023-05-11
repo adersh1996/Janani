@@ -46,7 +46,7 @@ public class SellerRegistration extends AppCompatActivity implements Validator.V
     private EditText etPassword;
     @ConfirmPassword
     private EditText etConfirmPassword;
-    private Button btSaveButton;
+    private TextView btSaveButton;
     private File proImageFile;
     int selectPicture = 200;
     private Validator validator;
@@ -61,12 +61,12 @@ public class SellerRegistration extends AppCompatActivity implements Validator.V
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        cvDpEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imageChooser();
-            }
-        });
+//        cvDpEditButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                imageChooser();
+//            }
+//        });
     }
 
     void imageChooser() {
@@ -103,8 +103,8 @@ public class SellerRegistration extends AppCompatActivity implements Validator.V
     }
 
     private void initView() {
-        ivDisplayImage = findViewById(R.id.iv_display_image);
-        cvDpEditButton = findViewById(R.id.cv_dp_edit_button);
+//        ivDisplayImage = findViewById(R.id.iv_display_image);
+//        cvDpEditButton = findViewById(R.id.cv_dp_edit_button);
         etCompanyName = findViewById(R.id.et_company_name);
         etPhoneNumber = findViewById(R.id.et_phone_number);
         etEmailId = findViewById(R.id.et_email_id);

@@ -61,50 +61,82 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!swAccountSwitch.isChecked()) {
-
-                    RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), etPhoneNumber.getText().toString());
-                    RequestBody password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
-
-                    APIInterface api_user_login = APIClient.getClient().create(APIInterface.class);
-                    api_user_login.CALL_APIUserLogin(phone, password).enqueue(new Callback<Root>() {
-                        @Override
-                        public void onResponse(Call<Root> call, Response<Root> response) {
-                            if (response.isSuccessful()) {
-                                Root root = response.body();
-                                if (root.status) {
-
-                                    SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = loginSharedPreferences.edit();
-                                    editor.putString("userId", root.userDetails.get(0).id);
-                                    editor.putString("phoneNumber", root.userDetails.get(0).mobile);
-                                    editor.putString("userName", root.userDetails.get(0).name);
-                                    editor.apply();
-
-                                    Intent userIntent = new Intent(LoginActivity.this, UserHomeActivity.class);
-                                    startActivity(userIntent);
-                                    Toast.makeText(LoginActivity.this, "Logging in as user", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Root> call, Throwable t) {
-                            Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+                    userLogin();
                 } else {
-                    Intent sellerIntent = new Intent(LoginActivity.this, SellerHomeActivity.class);
-                    startActivity(sellerIntent);
+                    sellerLogin();
                 }
 
             }
         });
     }
 
-    private void userLogin(APIInterface api_user_login) {
+    private void sellerLogin() {
+        RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), etPhoneNumber.getText().toString());
+        RequestBody password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
+
+        APIInterface api_seller_login = APIClient.getClient().create(APIInterface.class);
+        api_seller_login.CALL_APISellerLogin(phone, password).enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                Root root = response.body();
+                if (response.isSuccessful()) {
+                    if (root.status) {
+                        SharedPreferences loginSellerSharedPreferences = getSharedPreferences("loginSellerShared", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = loginSellerSharedPreferences.edit();
+                        editor.putString("sellerId", root.userDetails.get(0).id);
+                        editor.putString("phoneNumber", root.userDetails.get(0).mobile);
+                        editor.putString("userName", root.userDetails.get(0).name);
+                        editor.apply();
+
+                        Intent userIntent = new Intent(LoginActivity.this, SellerHomeActivity.class);
+                        startActivity(userIntent);
+                        Toast.makeText(LoginActivity.this, "Logging in as seller", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void userLogin() {
+        RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), etPhoneNumber.getText().toString());
+        RequestBody password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
+
+        APIInterface api_user_login = APIClient.getClient().create(APIInterface.class);
+        api_user_login.CALL_APIUserLogin(phone, password).enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                if (response.isSuccessful()) {
+                    Root root = response.body();
+                    if (root.status) {
+
+                        SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = loginSharedPreferences.edit();
+                        editor.putString("userId", root.userDetails.get(0).id);
+                        editor.putString("phoneNumber", root.userDetails.get(0).mobile);
+                        editor.putString("userName", root.userDetails.get(0).name);
+                        editor.apply();
+
+                        Intent userIntent = new Intent(LoginActivity.this, UserHomeActivity.class);
+                        startActivity(userIntent);
+                        Toast.makeText(LoginActivity.this, "Logging in as user", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }

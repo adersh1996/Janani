@@ -45,7 +45,7 @@ public class UserKitProductActivity extends AppCompatActivity {
 
         rvUserKitProductUserKit.setNestedScrollingEnabled(false);
 
-        categoryViewDisplay();
+//        categoryViewDisplay();
         productViewDisplay();
         ivUserKitSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +136,7 @@ public class UserKitProductActivity extends AppCompatActivity {
 
     private void initView() {
         etUserKitSearchBar = findViewById(R.id.et_userkit_search_bar);
-        rvUserKitCategoriesUserKit = findViewById(R.id.rv_categories_user_kit);
+//        rvUserKitCategoriesUserKit = findViewById(R.id.rv_categories_user_kit);
         rvUserKitProductUserKit = findViewById(R.id.rv_product_user_kit);
         ivUserKitSearchButton = findViewById(R.id.iv_userkit_search_button);
         scrollView = findViewById(R.id.scrollView);

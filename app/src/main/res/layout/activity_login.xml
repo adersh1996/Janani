@@ -270,6 +270,7 @@
                     android:layout_marginBottom="10dp"
                     android:drawableLeft="@drawable/baseline_local_phone_24"
                     android:drawablePadding="10dp"
+                    android:text="776655448"
                     android:hint="Email"
                     android:textColorHint="#000"
                     android:textSize="20sp" />
@@ -283,6 +284,7 @@
                     android:layout_marginRight="24dp"
                     android:drawableLeft="@drawable/baseline_lock_24"
                     android:drawablePadding="10dp"
+                    android:text="66eyy7"
                     android:layout_marginBottom="10dp"
                     android:hint="Password"
                     android:textColorHint="#000"

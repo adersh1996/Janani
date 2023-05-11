@@ -26,6 +26,7 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
     UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
     UserAccountFragment userAccountFragment = new UserAccountFragment();
     UserWishlistFragment userWishlistFragment = new UserWishlistFragment();
+    DietChartFragment userDietChartFragment = new DietChartFragment();
     FAQFragment faqFragment = new FAQFragment();
 
     @Override
@@ -112,6 +113,11 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.user_faq_option:
                 getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, faqFragment).commit();
+                closeDrawer();
+                return true;
+
+            case R.id.user_diet_chart:
+                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userDietChartFragment).commit();
                 closeDrawer();
                 return true;
         }

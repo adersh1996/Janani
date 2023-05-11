@@ -12,6 +12,7 @@ public class Root{
     public ArrayList<Category> category;
     public ArrayList<Faq> faq;
     public ArrayList<WishlistDetail> wishlistDetails;
+    public ArrayList<DietDetail> dietDetails;
 
 
 

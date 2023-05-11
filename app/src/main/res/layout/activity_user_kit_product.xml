@@ -67,22 +67,22 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_categories_user_kit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cv_search_bar_section"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="0dp"
-                android:padding="10dp" />
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rv_categories_user_kit"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/cv_search_bar_section"-->
+<!--                android:layout_marginLeft="0dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginRight="0dp"-->
+<!--                android:padding="10dp" />-->
 
 
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_below="@id/rv_categories_user_kit"
+                android:layout_below="@id/cv_search_bar_section"
                 android:background="@drawable/take_away_cuate" />
 
             <androidx.recyclerview.widget.RecyclerView

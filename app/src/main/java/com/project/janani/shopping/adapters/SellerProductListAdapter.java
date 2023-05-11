@@ -1,6 +1,8 @@
 package com.project.janani.shopping.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.project.janani.shopping.ProductDetailsActivity;
 import com.project.janani.shopping.R;
+import com.project.janani.shopping.SellerProductDetailsActivity;
 import com.project.janani.shopping.model.Root;
 
 public class SellerProductListAdapter extends RecyclerView.Adapter<SellerProductListAdapter.MyViewHolder> {
@@ -33,10 +37,20 @@ public class SellerProductListAdapter extends RecyclerView.Adapter<SellerProduct
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.sellerProductName.setText(root.product_details.get(position).name);
         Glide.with(context).load(root.product_details.get(position).image1).into(holder.sellerProductImage);
         holder.sellerProductPrice.setText(root.product_details.get(position).mrp);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SellerProductDetailsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                SellerProductDetailsActivity sellerProductDetailsActivity = new SellerProductDetailsActivity(root.product_details.get(position).product_id);
+            }
+        });
     }
 
     @Override
@@ -45,17 +59,18 @@ public class SellerProductListAdapter extends RecyclerView.Adapter<SellerProduct
     }
 
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView sellerProductImage;
         private TextView sellerProductName;
         private TextView sellerProductPrice;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             initView(itemView);
 
         }
+
         private void initView(View itemView) {
             sellerProductImage = itemView.findViewById(R.id.seller_product_image);
             sellerProductName = itemView.findViewById(R.id.seller_product_name);

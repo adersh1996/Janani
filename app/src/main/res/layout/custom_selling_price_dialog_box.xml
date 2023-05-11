@@ -13,28 +13,27 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:text="Add item to cart"
+        android:text="Update selling price"
         android:textSize="35sp"
         android:textStyle="bold" />
 
-
     <EditText
-        android:id="@+id/et_quantity"
+        android:id="@+id/et_selling_price"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/tv_dialog_box_image"
         android:background="@drawable/view_background"
-        android:hint="Enter quantity"
+        android:hint="Enter new selling price"
         android:paddingLeft="15dp"
         android:textSize="25sp" />
 
     <Button
-        android:id="@+id/bt_add_button"
+        android:id="@+id/bt_update_price_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_quantity"
+        android:layout_below="@+id/et_selling_price"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Add To Cart" />
+        android:text="Update Price" />
 
 </RelativeLayout>
