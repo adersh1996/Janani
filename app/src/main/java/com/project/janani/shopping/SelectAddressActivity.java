@@ -1,6 +1,5 @@
 package com.project.janani.shopping;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -79,6 +78,8 @@ public class SelectAddressActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             if (root.status) {
                                 Toast.makeText(SelectAddressActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(SelectAddressActivity.this, UserHomeActivity.class));
+                                finishAffinity();
                             } else {
                                 Toast.makeText(SelectAddressActivity.this, root.message, Toast.LENGTH_SHORT).show();
                             }

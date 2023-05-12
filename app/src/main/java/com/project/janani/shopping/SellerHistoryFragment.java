@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.project.janani.shopping.adapters.OrderHistoryAdapter;
 import com.project.janani.shopping.adapters.SellerOrderHistoryAdapter;
 import com.project.janani.shopping.model.Root;
 import com.project.janani.shopping.retrofit.APIClient;
@@ -57,7 +56,7 @@ public class SellerHistoryFragment extends Fragment {
                         SellerOrderHistoryAdapter sellerOrderHistoryAdapter = new SellerOrderHistoryAdapter(getActivity(), root);
                         sellerOrderHistoryRecyclerView.setAdapter(sellerOrderHistoryAdapter);
                     } else {
-                        Toast.makeText(getActivity(), root.message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Error!"+root.message, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Not Successful!", Toast.LENGTH_SHORT).show();

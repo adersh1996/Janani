@@ -21,7 +21,7 @@ public class SellerHomeActivity extends AppCompatActivity implements NavigationV
     SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
     SellerOrderFragment sellerOrderFragment = new SellerOrderFragment();
     SellerHistoryFragment sellerHistoryFragment = new SellerHistoryFragment();
-    SllerAccountFragment sellarAccountFragment = new SllerAccountFragment();
+    SllerAccountFragment sellerAccountFragment = new SllerAccountFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class SellerHomeActivity extends AppCompatActivity implements NavigationV
                 return true;
 
             case R.id.sell_account_item:
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellarAccountFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellerAccountFragment).commit();
                 closeDrawer();
                 return true;
         }
