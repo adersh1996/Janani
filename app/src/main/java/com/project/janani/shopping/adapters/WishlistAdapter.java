@@ -3,7 +3,6 @@ package com.project.janani.shopping.adapters;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.project.janani.shopping.ProductDetailsActivity;
 import com.project.janani.shopping.R;
 import com.project.janani.shopping.model.Root;
 import com.project.janani.shopping.retrofit.APIClient;
@@ -61,8 +59,16 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyView
         holder.cvRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeFromWishList(user_id, product_id);
+                removeFromWishList(user_id, product_id, position, root);
+                try {
+                    root.wishlistDetails.remove(position);
+                    notifyItemRemoved(position);
+                } catch (Exception e) {
+                    Toast.makeText(context, "WishList empty", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
             }
+
         });
 
         holder.cvAddButton.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +119,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyView
         });
     }
 
-    private void removeFromWishList(String user_id, String product_id) {
+    private void removeFromWishList(String user_id, String product_id, int position, Root rootWishList) {
 
         APIInterface apiRemoveFromWishList = APIClient.getClient().create(APIInterface.class);
         apiRemoveFromWishList.removeFromWishListApiCall(product_id, user_id).enqueue(new Callback<Root>() {
@@ -123,6 +129,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyView
                 if (response.isSuccessful()) {
                     if (root.status) {
                         Toast.makeText(context, root.message, Toast.LENGTH_SHORT).show();
+
                     } else {
                         Toast.makeText(context, root.message, Toast.LENGTH_SHORT).show();
                     }

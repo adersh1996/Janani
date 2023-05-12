@@ -34,7 +34,7 @@
                     android:layout_height="190dp"
                     android:layout_centerHorizontal="true"
                     android:padding="10dp"
-                    android:src="@drawable/shopping" />
+                    android:src="@drawable/no_image" />
 
                 <TextView
                     android:id="@+id/tv_product_title"

@@ -1,17 +1,16 @@
 package com.project.janani.shopping;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -88,11 +87,6 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
         switch (item.getItemId()) {
             case R.id.user_home_item:
                 getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userHomeFragment).commit();
-                closeDrawer();
-                return true;
-
-            case R.id.user_order_item:
-                getSupportFragmentManager().beginTransaction().replace(R.id.user_main_fragment, userOrderFragment).commit();
                 closeDrawer();
                 return true;
 

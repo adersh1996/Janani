@@ -3,9 +3,7 @@
     <item
         android:id="@+id/sell_home_item"
         android:title="Home" />
-    <item
-        android:id="@+id/sell_order_item"
-        android:title="Order" />
+
     <item
         android:id="@+id/sell_history_item"
         android:title="History" />

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -119,7 +118,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                         Root root = response.body();
                         if (response.isSuccessful()) {
                             if (root.status) {
-                                Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProductDetailsActivity.this, "Successful!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), UserHomeActivity.class));
                                 finishAffinity();
                             } else {

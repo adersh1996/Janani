@@ -66,7 +66,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         for (int i = 0; i < root.orderDetails.size(); i++) {
                             total_amount += root.orderDetails.get(i).total_amount;
                         }
-                        btPlaceOrderButton.setText("Pay ₹ " + total_amount);
+                        btPlaceOrderButton.setText("Pay ₹ " + root.orderDetails.get(0).total_amount);
 
                         shimmerLayoutShoppingCart.stopShimmer();
                         shimmerLayoutShoppingCart.setVisibility(View.GONE);

@@ -242,10 +242,10 @@
 
                 <EditText
                     android:id="@+id/et_license_number"
-                    android:layout_width="350dp"
+                    android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_below="@id/et_company_address"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignStart="@id/et_company_address"
                     android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/ic_id_icon"
                     android:drawablePadding="10dp"
@@ -257,10 +257,54 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/tv_license_image_add_button"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/et_license_number"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/view_background"
+                    android:drawableTint="@color/black"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:text="Add license image"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_profile_image_add_button"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/et_license_number"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@id/tv_license_image_add_button"
+                    android:background="@drawable/view_background"
+                    android:drawableTint="@color/black"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:text="Add profile image"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/iv_display_license_image"
+                    android:layout_width="350dp"
+                    android:layout_height="400dp"
+                    android:layout_below="@id/tv_license_image_add_button"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/iv_display_profile_image"
+                    android:layout_width="350dp"
+                    android:layout_height="400dp"
+                    android:layout_below="@id/iv_display_license_image"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/tv_user_kit"
                     android:layout_width="250dp"
                     android:layout_height="50dp"
-                    android:layout_below="@id/et_license_number"
+                    android:layout_below="@id/iv_display_license_image"
                     android:layout_alignStart="@id/et_license_number"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="30dp"
@@ -316,7 +360,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:autofillHints="text"
-                   android:drawableLeft="@drawable/bank"
+                    android:drawableLeft="@drawable/bank"
                     android:drawablePadding="10dp"
                     android:hint="@string/prompt_account_number"
                     android:inputType="text"
@@ -359,15 +403,6 @@
                     android:textColor="@color/text_color"
                     android:textSize="20sp" />
 
-
-                <!--                <View-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="2dp"-->
-                <!--                    android:layout_below="@id/et_confirm_password"-->
-                <!--                    android:layout_alignBaseline="@id/bt_register_button"-->
-                <!--                    android:background="@color/black"-->
-                <!--            />-->
-
                 <TextView
                     android:id="@+id/bt_register_seller_button"
                     android:layout_width="250dp"
@@ -383,12 +418,7 @@
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     android:textStyle="bold" />
-
-
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
-
     </RelativeLayout>
-
 </ScrollView>

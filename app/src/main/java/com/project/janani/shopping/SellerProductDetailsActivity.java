@@ -1,9 +1,9 @@
 package com.project.janani.shopping;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +31,7 @@ public class SellerProductDetailsActivity extends AppCompatActivity {
     private TextView tvProductSellingPrice;
     private TextView tvDescriptionBody;
     private TextView btUpdatePriceButton;
+    private TextView btDeleteProductButton;
 
     public SellerProductDetailsActivity() {
     }
@@ -46,6 +47,31 @@ public class SellerProductDetailsActivity extends AppCompatActivity {
         initView();
 
         displayProductDetails(product_id);
+
+
+        btDeleteProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                APIInterface apiDeleteProductApi = APIClient.getClient().create(APIInterface.class);
+                apiDeleteProductApi.deleteProductApi(product_id).enqueue(new Callback<Root>() {
+                    @Override
+                    public void onResponse(Call<Root> call, Response<Root> response) {
+                        Root root = response.body();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(SellerProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(SellerProductDetailsActivity.this, SellerHomeActivity.class));
+                        } else {
+                            Toast.makeText(SellerProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Root> call, Throwable t) {
+                        Toast.makeText(SellerProductDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         btUpdatePriceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +90,12 @@ public class SellerProductDetailsActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         if (new_price.getText().toString().isEmpty()) {
                             Toast.makeText(SellerProductDetailsActivity.this, "Enter a value", Toast.LENGTH_SHORT).show();
+
                         } else {
                             updatePrice(product_id, new_price.getText().toString());
                             dialog.dismiss();
+                            startActivity(new Intent(SellerProductDetailsActivity.this, SellerHomeActivity.class));
+                            finishAffinity();
                         }
                     }
                 });
@@ -85,6 +114,8 @@ public class SellerProductDetailsActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (root.status) {
                         Toast.makeText(SellerProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SellerProductDetailsActivity.this, SellerHomeActivity.class));
+                        finishAffinity();
                     } else {
                         Toast.makeText(SellerProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
                     }
@@ -132,5 +163,6 @@ public class SellerProductDetailsActivity extends AppCompatActivity {
         tvProductSellingPrice = findViewById(R.id.tv_product_selling_price);
         tvDescriptionBody = findViewById(R.id.tv_description_body);
         btUpdatePriceButton = findViewById(R.id.bt_update_price_button);
+        btDeleteProductButton = findViewById(R.id.bt_delete_product_button);
     }
 }

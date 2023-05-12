@@ -61,9 +61,10 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         holder.cvRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, position + "hello ", Toast.LENGTH_SHORT).show();
-                removeItem(position);
-
+                if (position >= 0) {
+                    String product_id = root.orderDetails.get(position).product_id;
+                    removeItem(product_id, position, root);
+                }
 
 
             }
@@ -71,20 +72,22 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
     }
 
-    private void removeItem(int position) {
+    private void removeItem(String product_id, int position, Root rootShoppingCart) {
         APIInterface removeItemAPI = APIClient.getClient().create(APIInterface.class);
         SharedPreferences loginSharedPreferences = context.getSharedPreferences("loginShared", context.MODE_PRIVATE);
         String userId = loginSharedPreferences.getString("userId", "default");
-        removeItemAPI.removeItemApiCall(root.orderDetails.get(position).product_id, userId).enqueue(new Callback<Root>() {
+        removeItemAPI.removeItemApiCall(product_id, userId).enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
-                Root newRoot = response.body();
+                Root root = response.body();
                 if (response.isSuccessful()) {
-                    if (newRoot.status) {
-                        Toast.makeText(context, newRoot.message, Toast.LENGTH_SHORT).show();
+                    if (root.status) {
+                        Toast.makeText(context, root.message, Toast.LENGTH_SHORT).show();
+                        rootShoppingCart.orderDetails.remove(position);
+                        notifyItemRemoved(position);
 
                     } else {
-                        Toast.makeText(context, newRoot.message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, root.message, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(context, "response not success", Toast.LENGTH_SHORT).show();

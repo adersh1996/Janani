@@ -18,8 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -107,21 +105,25 @@ public class UserHomeFragment extends Fragment {
         shimmerFrameLayout.startShimmer();
 
         rvProductListView.setNestedScrollingEnabled(false);
+        productViewDisplay();
 
         SharedPreferences categorySharedPreference = getActivity().getSharedPreferences("category select", Context.MODE_PRIVATE);
         data = categorySharedPreference.getString("category", "default");
-        PadsFragment padsFragment = new PadsFragment();
 
         tvAllCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                tvErrorMsg.setVisibility(View.GONE);
+                rvProductListView.setVisibility(VISIBLE);
+                productViewDisplay();
                 tvAllCategories.setTextColor(Color.parseColor("#757070"));
                 tvAllCategories.setBackgroundColor(Color.parseColor("#5FCCA2"));
                 tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#ffffff"));
                 tvCategoryMenstrualCups.setBackgroundColor(Color.parseColor("#ffffff"));
                 tvCategoryTampons.setBackgroundColor(Color.parseColor("#ffffff"));
                 tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#ffffff"));
-                productViewDisplay();
+
             }
         });
 
@@ -159,7 +161,7 @@ public class UserHomeFragment extends Fragment {
                 tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#ffffff"));
                 tvCategoryTampons.setBackgroundColor(Color.parseColor("#ffffff"));
                 String category = tvCategoryMenstrualCups.getText().toString();
-                displayProduct(category);
+                displayProduct("cups");
             }
         });
 
@@ -186,11 +188,13 @@ public class UserHomeFragment extends Fragment {
                 tvCategorySanitaryPad.setBackgroundColor(Color.parseColor("#ffffff"));
                 tvCategoryMenstrualCups.setBackgroundColor(Color.parseColor("#ffffff"));
                 tvCategoryPeriodUnderwear.setBackgroundColor(Color.parseColor("#ffffff"));
+                String category = tvCategoryTampons.getText().toString();
+                displayProduct(category);
             }
         });
 
 //        categoryViewDisplay();
-        productViewDisplay();
+
 
         ivSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,7 +231,6 @@ public class UserHomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Root root = response.body();
                     if (root.status) {
-
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
                         rvProductListView.setLayoutManager(gridLayoutManager);
                         UserProductListAdapter userProductListAdapter = new UserProductListAdapter(getActivity(), root);
@@ -235,15 +238,6 @@ public class UserHomeFragment extends Fragment {
                         shimmerFrameLayout.stopShimmer();
                         shimmerFrameLayout.setVisibility(View.GONE);
                         scrollView.setVisibility(VISIBLE);
-//                        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-//                        rvProductListView.setLayoutManager(layoutManager);
-//                        SellerProductListAdapter sellerProductListAdapter = new SellerProductListAdapter(root, getActivity());
-//
-//                        int spanCount = 2; // 3 columns
-//                        int spacing = 50; // 50px
-//                        boolean includeEdge = true;
-//                        rvProductListView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
-//                        rvProductListView.setAdapter(sellerProductListAdapter);
                     }
                 } else {
                     Toast.makeText(getActivity(), "Server Failed", Toast.LENGTH_SHORT).show();

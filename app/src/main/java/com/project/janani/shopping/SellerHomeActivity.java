@@ -1,19 +1,13 @@
 package com.project.janani.shopping;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -88,10 +82,6 @@ public class SellerHomeActivity extends AppCompatActivity implements NavigationV
                 closeDrawer();
                 return true;
 
-            case R.id.sell_order_item:
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellerOrderFragment).commit();
-                closeDrawer();
-                return true;
 
             case R.id.sell_history_item:
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_fragment, sellerHistoryFragment).commit();

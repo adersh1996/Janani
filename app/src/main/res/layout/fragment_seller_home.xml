@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E5E5CB"
     tools:context=".SellerHomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/seller_product_list_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/seller_add_product_btn"

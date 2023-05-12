@@ -59,7 +59,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!swAccountSwitch.isChecked()) {
-                    userLogin();
+                    if (!(etPhoneNumber.getText().toString().isEmpty() && etPassword.getText().toString().isEmpty())) {
+                        userLogin();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Enter Login Credentials", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     sellerLogin();
                 }
@@ -86,8 +90,8 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("userName", root.userDetails.get(0).name);
                         editor.apply();
 
-                        Intent userIntent = new Intent(LoginActivity.this, SellerHomeActivity.class);
-                        startActivity(userIntent);
+                        Intent sellerIntent = new Intent(LoginActivity.this, SellerHomeActivity.class);
+                        startActivity(sellerIntent);
                         Toast.makeText(LoginActivity.this, "Logging in as seller", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -97,12 +101,15 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
-
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void userLogin() {
+
+        String phNumber = etPhoneNumber.getText().toString();
+        String pWord = etPassword.getText().toString();
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"), etPhoneNumber.getText().toString());
         RequestBody password = RequestBody.create(MediaType.parse("text/plain"), etPassword.getText().toString());
 
@@ -110,8 +117,8 @@ public class LoginActivity extends AppCompatActivity {
         api_user_login.CALL_APIUserLogin(phone, password).enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
+                Root root = response.body();
                 if (response.isSuccessful()) {
-                    Root root = response.body();
                     if (root.status) {
 
                         SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);

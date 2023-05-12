@@ -1,11 +1,13 @@
 package com.project.janani.shopping;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,16 +23,22 @@ import com.project.janani.shopping.model.Root;
 import com.project.janani.shopping.retrofit.APIClient;
 import com.project.janani.shopping.retrofit.APIInterface;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SellerAdditionalDetails extends AppCompatActivity implements Validator.ValidationListener, View.OnClickListener {
-
+    int selectPicture = 200;
+    private static File proImageFileLicenseImage, proImageFileProfileImage;
     @NotEmpty(message = "Please enter company address")
     private EditText etCompanyAddress;
     @NotEmpty(message = "Please enter your license number")
@@ -45,13 +53,38 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
     private TextView btRegisterSellerButton;
     private Validator validator;
     protected boolean validated;
-    private static boolean switchState;
+    private static String switchState = "no";
+    private TextView tvLicenseImageAddButton;
+    private ImageView ivDisplayLicenseImage;
+    private TextView tvProfileImageAddButton;
+    private ImageView ivDisplayProfileImage;
+
+    public static Uri selectedLicenseImage, selectedProfileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_additional_details);
         initView();
+
+        tvProfileImageAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivDisplayProfileImage.setVisibility(View.VISIBLE);
+                imageChooser();
+
+
+            }
+        });
+
+        tvLicenseImageAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivDisplayLicenseImage.setVisibility(View.VISIBLE);
+                imageChooser();
+
+            }
+        });
 
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -76,21 +109,79 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
                 if (isChecked) {
                     // on below line we are setting text
                     // if switch is checked.
-                    switchState = true;
+                    switchState = "yes";
                     Toast.makeText(getApplicationContext(), String.valueOf(switchState), Toast.LENGTH_SHORT).show();
 
                 } else {
                     // on below line we are setting text
                     // if switch is unchecked.
-                    switchState = false;
+                    switchState = "no";
                     Toast.makeText(getApplicationContext(), String.valueOf(switchState), Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
-
-
     }
+
+    void imageChooser() {
+
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityIfNeeded(Intent.createChooser(i, "Select Picture"), selectPicture);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == selectPicture) {
+                Uri selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    ivDisplayLicenseImage.setImageURI(selectedImageUri);
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == selectPicture && resultCode == RESULT_OK && null != data) {
+            try {
+                selectedLicenseImage = data.getData();
+                final InputStream imageStream = getApplicationContext().getContentResolver().openInputStream(selectedLicenseImage);
+                proImageFileLicenseImage = new File(getCacheDir(),"file_name");
+                OutputStream outputStream = new FileOutputStream(proImageFileLicenseImage);
+
+
+                SharedPreferences profileImageSave = getSharedPreferences("profileImage", MODE_PRIVATE);
+                selectedProfileImage = Uri.parse(profileImageSave.getString("profile_image", "default"));
+                final InputStream imageStream1 = getApplicationContext().getContentResolver().openInputStream(selectedProfileImage);
+                proImageFileProfileImage = new File(getCacheDir(),"file_name_two");
+                OutputStream outputStream1 = new FileOutputStream(proImageFileProfileImage);
+
+
+                byte[] buffer = new byte[1024];
+                int byteRead;
+
+                byte[] bufferTwo = new byte[1024];
+                int byteReadTwo;
+
+                while (((byteRead = imageStream.read(buffer)) != -1) && (byteReadTwo = imageStream1.read(bufferTwo)) != -1) {
+                    outputStream.write(buffer, 0, byteRead);
+                    outputStream1.write(bufferTwo, 0, byteReadTwo);
+                }
+                outputStream1.close();
+                outputStream.close();
+                imageStream.close();
+                imageStream1.close();
+                Toast.makeText(this, "reached4", Toast.LENGTH_SHORT).show();
+
+
+            } catch (Exception e) {
+                Toast.makeText(this, "Error!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private void initView() {
         etCompanyAddress = findViewById(R.id.et_company_address);
@@ -102,18 +193,24 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
         btRegisterSellerButton = findViewById(R.id.bt_register_seller_button);
 
         btRegisterSellerButton.setOnClickListener(this);
+        tvLicenseImageAddButton = findViewById(R.id.tv_license_image_add_button);
+        ivDisplayLicenseImage = findViewById(R.id.iv_display_license_image);
+        tvProfileImageAddButton = findViewById(R.id.tv_profile_image_add_button);
+        ivDisplayProfileImage = findViewById(R.id.iv_display_profile_image);
     }
 
     protected boolean validate() {
         if (validator != null)
             validator.validate();
-        return validated;           // would be set in one of the callbacks below
+        return validated;
     }
 
     @Override
     public void onClick(View view) {
         validator.validate();
         if (validated) {
+
+
             SharedPreferences preferences = getSharedPreferences("myShared", MODE_PRIVATE);
 
             RequestBody companyName = RequestBody.create(MediaType.parse("text/plain"), preferences.getString("companyName", "default"));
@@ -128,14 +225,33 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
             RequestBody accountNumber = RequestBody.create(MediaType.parse("text/plain"), etAccountNumber.getText().toString());
             RequestBody branchAddress = RequestBody.create(MediaType.parse("text/plain"), etBranchAddress.getText().toString());
             RequestBody ifscCode = RequestBody.create(MediaType.parse("text/plain"), etIFSCCode.getText().toString());
-            RequestBody userKit = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(switchState));
+            RequestBody userKit = RequestBody.create(MediaType.parse("text/plain"), switchState);
 
+
+            MultipartBody.Part proImageFilePartProfileImage = null;
+            MultipartBody.Part proImageFilePartLicenseImage = null;
+
+            try {
+                proImageFilePartLicenseImage = MultipartBody.Part.createFormData("image", proImageFileLicenseImage.getName(), RequestBody.create(MediaType.parse("image/*"), proImageFileLicenseImage));
+                proImageFilePartProfileImage = MultipartBody.Part.createFormData("image", proImageFileProfileImage.getName(), RequestBody.create(MediaType.parse("image/*"), proImageFileProfileImage));
+
+            } catch (NullPointerException e) {
+                Toast.makeText(this, "ERROR in catch" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
 
             APIInterface api_seller_registration = APIClient.getClient().create(APIInterface.class);
-            api_seller_registration.CALL_API_Seller_Registration(companyName, phoneNumber, emailID, password, confirmPassword, companyAddress, licenseNumber, userKit, accountNumber, branchAddress, ifscCode).enqueue(new Callback<Root>() {
+            api_seller_registration.CALL_API_Seller_Registration(companyName, companyAddress, phoneNumber, emailID, password, proImageFilePartProfileImage, proImageFilePartLicenseImage, licenseNumber, userKit).enqueue(new Callback<Root>() {
                 @Override
                 public void onResponse(Call<Root> call, Response<Root> response) {
-
+                    Root root = response.body();
+                    if (response.isSuccessful()) {
+                        if (root.status) {
+                            Toast.makeText(SellerAdditionalDetails.this, "Seller Added", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        } else {
+                            Toast.makeText(SellerAdditionalDetails.this, root.message + "  Registration failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
 
                 @Override

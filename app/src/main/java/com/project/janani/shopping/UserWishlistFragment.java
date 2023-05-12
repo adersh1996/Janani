@@ -94,10 +94,7 @@ public class UserWishlistFragment extends Fragment {
             public void onResponse(Call<Root> call, Response<Root> response) {
                 Root root = response.body();
                 if (response.isSuccessful()) {
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-                    rvWishlistItems.setLayoutManager(linearLayoutManager);
-                    WishlistAdapter wishlistAdapter = new WishlistAdapter(getActivity(),root );
-                    rvWishlistItems.setAdapter(wishlistAdapter);
+                    buildRecyclerView(root);
                 }
             }
 
@@ -109,6 +106,13 @@ public class UserWishlistFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void buildRecyclerView(Root root) {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        rvWishlistItems.setLayoutManager(linearLayoutManager);
+        WishlistAdapter wishlistAdapter = new WishlistAdapter(getActivity(), root);
+        rvWishlistItems.setAdapter(wishlistAdapter);
     }
 
     private void initView(View view) {

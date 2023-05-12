@@ -1,6 +1,7 @@
 package com.project.janani.shopping;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +34,15 @@ public class SellerHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_seller_home, container, false);
         initView(view);
+        SharedPreferences loginSellerSharedPreferences = getActivity().getSharedPreferences("loginSellerShared", getActivity().MODE_PRIVATE);
+        String sellerId = loginSellerSharedPreferences.getString("sellerId", "default");
 
-        apiCall("1");
+        apiCall(sellerId);
 
         sellerAddProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SellerAddProductActivity.class);
+                Intent intent = new Intent(getActivity(), NewSellerAddProductActivity.class);
                 startActivity(intent);
             }
         });

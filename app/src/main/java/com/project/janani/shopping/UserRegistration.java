@@ -1,14 +1,9 @@
 package com.project.janani.shopping;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,7 +26,6 @@ import com.project.janani.shopping.retrofit.APIClient;
 import com.project.janani.shopping.retrofit.APIInterface;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -102,10 +96,7 @@ public class UserRegistration extends AppCompatActivity implements Validator.Val
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
-
-
             if (requestCode == selectPicture) {
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {

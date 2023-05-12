@@ -5,14 +5,11 @@ import com.project.janani.shopping.model.Root;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Query;
 
 public interface APIInterface {
     @Multipart
@@ -23,7 +20,7 @@ public interface APIInterface {
     @Multipart
     @POST("seller_login.php")
     Call<Root> CALL_APISellerLogin(@Part("phone") RequestBody phone_number,
-                                 @Part("password") RequestBody password);
+                                   @Part("password") RequestBody password);
 
 
     @Multipart
@@ -52,16 +49,14 @@ public interface APIInterface {
     @Multipart
     @POST("seller_reg.php")
     Call<Root> CALL_API_Seller_Registration(@Part("name") RequestBody name,
-                                            @Part("mobile") RequestBody mobile,
-                                            @Part("email") RequestBody email,
+                                            @Part("address") RequestBody company_address,
+                                            @Part("phone") RequestBody mobile,
+                                            @Part("mailto") RequestBody email,
                                             @Part("password") RequestBody password,
-                                            @Part("confirmPassword") RequestBody confirm_password,
-                                            @Part("companyAddress") RequestBody company_address,
-                                            @Part("licenseNumber") RequestBody license_number,
-                                            @Part("bankAccount") RequestBody bank_account,
-                                            @Part("branchAddress") RequestBody branch_address,
-                                            @Part("IFSCCode") RequestBody IFSC_code,
-                                            @Part("userKit") RequestBody user_kit
+                                            @Part MultipartBody.Part avatar,
+                                            @Part MultipartBody.Part icon,
+                                            @Part("license_num ") RequestBody license_number,
+                                            @Part("user_kit") RequestBody user_kit
     );
 
     @Multipart
@@ -101,6 +96,10 @@ public interface APIInterface {
     Call<Root> viewCartApiCall(@Field("user_id") String user_id);
 
     @FormUrlEncoded
+    @POST("delete_product.php")
+    Call<Root> deleteProductApi(@Field("product_id") String product_id);
+
+    @FormUrlEncoded
     @POST("view_user.php")
     Call<Root> viewUserAccountApiCall(@Field("userid") String userid);
 
@@ -123,11 +122,28 @@ public interface APIInterface {
 
     @Multipart
     @POST("add_product.php")
-    Call<Root> addProductSellerApiCall(@Part("seller_id") RequestBody sellerId, @Part("name") RequestBody name,
-                                       @Part("description") RequestBody description, @Part("mrp") RequestBody mrp,
-                                       @Part("selling_price") RequestBody sellingPrice, @Part("qty") RequestBody quantity,
-                                       @Part MultipartBody.Part image1, @Part MultipartBody.Part image2,
-                                       @Part MultipartBody.Part image3, @Part MultipartBody.Part video1);
+    Call<Root> addProductSellerApiCall(@Part("seller_id") RequestBody sellerId,
+                                       @Part("name") RequestBody name,
+                                       @Part("description") RequestBody description,
+                                       @Part("mrp") RequestBody mrp,
+                                       @Part("selling_price") RequestBody sellingPrice,
+                                       @Part("qty") String quantity,
+                                       @Part MultipartBody.Part image1,
+                                       @Part MultipartBody.Part image2,
+                                       @Part MultipartBody.Part image3,
+                                       @Part MultipartBody.Part video1);
+
+    @Multipart
+    @POST("add_product.php")
+    Call<Root> newAddProductSellerApiCall(@Part("seller_id") RequestBody sellerId,
+                                          @Part("name") RequestBody name,
+                                          @Part("category") RequestBody category,
+                                          @Part("description") RequestBody description,
+                                          @Part("mrp") RequestBody mrp,
+                                          @Part("selling_price") RequestBody sellingPrice,
+                                          @Part("qty") String quantity,
+                                          @Part("avatar") RequestBody image1,
+                                          @Part MultipartBody.Part image2);
 
     @FormUrlEncoded
     @POST("seller_order_history.php")
@@ -182,7 +198,7 @@ public interface APIInterface {
 //    @POST("seller_login.php")
 //    Call<Root>sellerLoginApiCall(@Field("phone")String phone)
 
-
+    @FormUrlEncoded
     @POST("remove_from_wishlist.php")
     Call<Root> removeFromWishListApiCall(@Field("product_id") String product_id, @Field("user_id") String user_id);
 
