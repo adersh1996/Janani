@@ -61,10 +61,24 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         holder.cvRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (position >= 0) {
-                    String product_id = root.orderDetails.get(position).product_id;
-                    removeItem(product_id, position, root);
+                    try {
+                        String product_id = root.orderDetails.get(position).product_id;
+                        removeItem(product_id, position, root);
+                        root.orderDetails.remove(position);
+                        notifyItemRemoved(position);
+                    } catch (IndexOutOfBoundsException e) {
+                        Toast.makeText(context, "WishList empty", Toast.LENGTH_SHORT).show();
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
                 }
+//                if (position >= 0) {
+//                    String product_id = root.orderDetails.get(position).product_id;
+//                    removeItem(product_id, position, root);
+//                }
 
 
             }
@@ -82,6 +96,8 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
                 Root root = response.body();
                 if (response.isSuccessful()) {
                     if (root.status) {
+
+
                         Toast.makeText(context, root.message, Toast.LENGTH_SHORT).show();
                         rootShoppingCart.orderDetails.remove(position);
                         notifyItemRemoved(position);

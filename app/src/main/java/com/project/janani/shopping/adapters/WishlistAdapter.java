@@ -59,13 +59,17 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyView
         holder.cvRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeFromWishList(user_id, product_id, position, root);
-                try {
-                    root.wishlistDetails.remove(position);
-                    notifyItemRemoved(position);
-                } catch (Exception e) {
-                    Toast.makeText(context, "WishList empty", Toast.LENGTH_SHORT).show();
-                    throw new RuntimeException(e);
+                if (position >= 0) {
+                    try {
+                        removeFromWishList(user_id, product_id, position, root);
+                        root.wishlistDetails.remove(position);
+                        notifyItemRemoved(position);
+                    } catch (IndexOutOfBoundsException e) {
+                        Toast.makeText(context, "WishList empty", Toast.LENGTH_SHORT).show();
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    Toast.makeText(context, "ERROR", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -119,7 +123,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.MyView
         });
     }
 
-    private void removeFromWishList(String user_id, String product_id, int position, Root rootWishList) {
+    private void removeFromWishList(String user_id, String product_id, int position, Root
+            rootWishList) {
 
         APIInterface apiRemoveFromWishList = APIClient.getClient().create(APIInterface.class);
         apiRemoveFromWishList.removeFromWishListApiCall(product_id, user_id).enqueue(new Callback<Root>() {

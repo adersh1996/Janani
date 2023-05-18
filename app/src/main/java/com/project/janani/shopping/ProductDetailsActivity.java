@@ -39,6 +39,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     private TextView tvMrpRsSymbol;
 
     private ImageButton ibSaveButton;
+    //    private ArrayList<WishListClass> wishListArray;
     public static String productId;
     int i = 0;
     private NumberPicker npQuantityPicker;
@@ -58,6 +59,21 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_product_details);
         initView();
 
+//        if (wishListArray == null) {
+//            wishListArray = new ArrayList<>();
+//        }
+
+        SharedPreferences saveWishListState = getSharedPreferences("wishlist_button_state", MODE_PRIVATE);
+        int state = saveWishListState.getInt("button_state", i);
+
+
+//        if (!(wishListArray == null) && wishListArray.contains(productId)) {
+//            ibSaveButton.setBackgroundColor(Color.parseColor("#EE0D5C"));
+//        } else if (state == 1) {
+//            ibSaveButton.setBackgroundColor(Color.parseColor("#D5CEA3"));
+//        }
+
+
         SharedPreferences productIdSave = getSharedPreferences("save productId", MODE_PRIVATE);
         SharedPreferences.Editor editor = productIdSave.edit();
         editor.putString("product_id", productId);
@@ -69,6 +85,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
         npQuantityPicker.setMinValue(1);
 
         ibSaveButton.setOnClickListener(this);
+
         APIInterface apiProductDetails = APIClient.getClient().create(APIInterface.class);
         apiProductDetails.viewProductDetailsApiCall(productId).enqueue(new Callback<Root>() {
             @Override
@@ -89,14 +106,18 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                         shimmerFrameLayout.setVisibility(View.GONE);
                         relativeLayout.setVisibility(View.VISIBLE);
                     } else {
+                        shimmerFrameLayout.stopShimmer();
                         Toast.makeText(ProductDetailsActivity.this, "failed", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    shimmerFrameLayout.stopShimmer();
                 }
             }
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
                 Toast.makeText(ProductDetailsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                shimmerFrameLayout.stopShimmer();
             }
         });
 
@@ -129,7 +150,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                     @Override
                     public void onFailure(Call<Root> call, Throwable t) {
-                        Toast.makeText(ProductDetailsActivity.this, "hellot" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductDetailsActivity.this, "ERROR!" + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -155,12 +176,25 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         if (i == 0) {
             ibSaveButton.setBackgroundColor(Color.parseColor("#EE0D5C"));
+
+            SharedPreferences saveWishListState = getSharedPreferences("wishlist_button_state", MODE_PRIVATE);
+            SharedPreferences.Editor editor = saveWishListState.edit();
+            editor.putInt("button_state", i);
+            editor.apply();
+
             i++;
             addToWishList();
 
         } else if (i == 1) {
             ibSaveButton.setBackgroundColor(Color.parseColor("#D5CEA3"));
+
+            SharedPreferences saveWishListState = getSharedPreferences("wishlist_button_state", MODE_PRIVATE);
+            SharedPreferences.Editor editor = saveWishListState.edit();
+            editor.putInt("button_state", i);
+            editor.apply();
+
             i = 0;
+
             SharedPreferences loginSharedPreferences = getSharedPreferences("loginShared", MODE_PRIVATE);
             String user_id = loginSharedPreferences.getString("userId", "default");
             removeFromWishList(user_id);
@@ -209,7 +243,29 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
                 Root root = response.body();
                 if (response.isSuccessful()) {
                     if (root.status) {
+
+//                        addToWishListApi.viewWishListApiCall().enqueue(new Callback<Root>() {
+//                            @Override
+//                            public void onResponse(Call<Root> call, Response<Root> response) {
+//                                Root root1 = response.body();
+//                                if (response.isSuccessful()) {
+//                                    if (root1.status) {
+//                                        int status = 0;
+//                                        boolean check = false;
+//                                        if (!(root1.wishlistDetails.isEmpty())) {
+//                                            for (int i = 0; i < root1.wishlistDetails.size(); i++) {
+//                                                if (check = (root1.wishlistDetails.get(i).product_id).contains(productId)) {
+//                                                    status++;
+//                                                    break;
+//                                                }
+//                                            }
+//                                            if (status == 0) {
+//                                                Toast.makeText(ProductDetailsActivity.this, "Product already added!", Toast.LENGTH_SHORT).show();
+//                                            } else {
                         Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
+
+//                        wishListArray.add(new WishListClass(productId));
+
                     } else {
                         Toast.makeText(ProductDetailsActivity.this, root.message, Toast.LENGTH_SHORT).show();
                     }
@@ -218,6 +274,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
 
                 }
             }
+//                                }
+//                            }
 
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
@@ -225,5 +283,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements View.On
             }
         });
     }
-
 }
+//            }
+
+//            @Override
+//            public void onFailure(Call<Root> call, Throwable t) {
+//
+//            }
+//        });
+//    }
+
+

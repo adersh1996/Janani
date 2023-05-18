@@ -3,7 +3,6 @@ package com.project.janani.shopping.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +10,13 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.project.janani.shopping.ProductDetailsActivity;
 import com.project.janani.shopping.R;
-import com.project.janani.shopping.model.ProductDetail;
 import com.project.janani.shopping.model.Root;
 
 public class UserProductListAdapter extends RecyclerView.Adapter<UserProductListAdapter.MyViewHolder> {
@@ -47,11 +43,11 @@ public class UserProductListAdapter extends RecyclerView.Adapter<UserProductList
         holder.tvProductTitle.setText(root.product_details.get(position).name);
         holder.tvProductPrice.setText(root.product_details.get(position).selling_price);
 
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
+                intent.putExtra("position", position);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
                 ProductDetailsActivity productDetailsActivity = new ProductDetailsActivity(root.product_details.get(position).product_id);

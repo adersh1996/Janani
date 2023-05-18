@@ -50,12 +50,14 @@
             android:layout_below="@id/et_user_name"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
             android:background="@drawable/view_background"
-            android:gravity="start"
-            android:hint="Enter Your Address"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp" />
+            android:drawableLeft="@drawable/ic_address"
+            android:drawablePadding="20dp"
+            android:hint="Enter your address"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"/>
+
         <EditText
             android:id="@+id/et_user_pincode"
             android:layout_width="350dp"
@@ -63,12 +65,14 @@
             android:layout_below="@id/et_user_address"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
             android:background="@drawable/view_background"
-            android:gravity="start"
-            android:hint="Enter Your Pin Code"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp" />
+            android:drawableLeft="@drawable/number"
+            android:drawablePadding="20dp"
+            android:hint="Enter your pin code"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp" />
+
         <EditText
             android:id="@+id/et_user_city"
             android:layout_width="350dp"
@@ -76,12 +80,14 @@
             android:layout_below="@id/et_user_pincode"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
             android:background="@drawable/view_background"
-            android:gravity="start"
-            android:hint="Enter Your City"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp" />
+            android:drawableLeft="@drawable/baseline_location_black"
+            android:drawablePadding="20dp"
+            android:hint="Enter your city"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp"/>
+
         <EditText
             android:id="@+id/et_user_state"
             android:layout_width="350dp"
@@ -89,12 +95,13 @@
             android:layout_below="@id/et_user_city"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
             android:background="@drawable/view_background"
-            android:gravity="start"
-            android:hint="Enter Your State"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp" />
+            android:drawableLeft="@drawable/right_arrow"
+            android:drawablePadding="20dp"
+            android:hint="Enter your state"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/et_phone_number"

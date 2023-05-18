@@ -1,13 +1,16 @@
 package com.project.janani.shopping.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.janani.shopping.R;
@@ -16,6 +19,8 @@ import com.project.janani.shopping.SavedAddressClass;
 import java.util.ArrayList;
 
 public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapter.MyViewHolder> {
+
+    int row_index = -1;
     Context context;
 
 
@@ -37,7 +42,7 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         SavedAddressClass currentItem = mExampleList.get(position);
         holder.tvDisplayUsername.setText(currentItem.getUserName());
         holder.tvDisplayUserAddress.setText(currentItem.getUserAddress());
@@ -49,6 +54,9 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                row_index = position;
+                notifyDataSetChanged();
                 SharedPreferences selectAddressPreference = context.getSharedPreferences("selectAddress", context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = selectAddressPreference.edit();
                 editor.putString("select_username", currentItem.getUserName());
@@ -60,6 +68,13 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
                 editor.apply();
             }
         });
+
+        if (row_index == position) {
+            holder.rlSavedAddressView.setBackgroundResource(R.drawable.out_line_background_selected);
+
+        } else {
+            holder.rlSavedAddressView.setBackgroundResource(R.drawable.out_line_background);
+        }
     }
 
     @Override
@@ -75,6 +90,8 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
         TextView tvDisplayUserPinCode;
         TextView tvDisplayUserCity;
         TextView tvDisplayUserState;
+        RelativeLayout rlSavedAddressView;
+        CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +105,8 @@ public class SavedAddressAdapter extends RecyclerView.Adapter<SavedAddressAdapte
             tvDisplayUserPinCode = itemView.findViewById(R.id.tv_display_user_pin_code);
             tvDisplayUserCity = itemView.findViewById(R.id.tv_display_user_city);
             tvDisplayUserState = itemView.findViewById(R.id.tv_display_user_state);
+            rlSavedAddressView = itemView.findViewById(R.id.rl_saved_address_view);
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 }
