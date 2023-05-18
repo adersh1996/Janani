@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E5CB"
-    android:paddingBottom="10dp"
+    android:fillViewport="true"
     tools:context=".SelectAddressActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E5E5CB"
+        android:paddingBottom="10dp">
+
+
 
 
     <TextView
@@ -63,6 +69,8 @@
         android:text="Place order"
         android:textSize="20sp" />
 </RelativeLayout>
+</ScrollView>
+
 
 
 

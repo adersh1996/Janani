@@ -53,7 +53,7 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
     private TextView btRegisterSellerButton;
     private Validator validator;
     protected boolean validated;
-    private static String switchState = "no";
+    private static String switchState = "false";
     private TextView tvLicenseImageAddButton;
     private ImageView ivDisplayLicenseImage;
     private TextView tvProfileImageAddButton;
@@ -109,13 +109,13 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
                 if (isChecked) {
                     // on below line we are setting text
                     // if switch is checked.
-                    switchState = "yes";
+                    switchState = "true";
                     Toast.makeText(getApplicationContext(), String.valueOf(switchState), Toast.LENGTH_SHORT).show();
 
                 } else {
                     // on below line we are setting text
                     // if switch is unchecked.
-                    switchState = "no";
+                    switchState = "false";
                     Toast.makeText(getApplicationContext(), String.valueOf(switchState), Toast.LENGTH_SHORT).show();
 
                 }
@@ -232,11 +232,11 @@ public class SellerAdditionalDetails extends AppCompatActivity implements Valida
             MultipartBody.Part proImageFilePartLicenseImage = null;
 
             try {
-                proImageFilePartLicenseImage = MultipartBody.Part.createFormData("image", proImageFileLicenseImage.getName(), RequestBody.create(MediaType.parse("image/*"), proImageFileLicenseImage));
-                proImageFilePartProfileImage = MultipartBody.Part.createFormData("image", proImageFileProfileImage.getName(), RequestBody.create(MediaType.parse("image/*"), proImageFileProfileImage));
+                proImageFilePartLicenseImage = MultipartBody.Part.createFormData("avatar", proImageFileLicenseImage.getName(), RequestBody.create(MediaType.parse("image/*"), proImageFileLicenseImage));
+                proImageFilePartProfileImage = MultipartBody.Part.createFormData("icon", proImageFileProfileImage.getName(), RequestBody.create(MediaType.parse("image/*"), proImageFileProfileImage));
 
             } catch (NullPointerException e) {
-                Toast.makeText(this, "ERROR in catch" + e.getMessage(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "ERROR in catch" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             APIInterface api_seller_registration = APIClient.getClient().create(APIInterface.class);

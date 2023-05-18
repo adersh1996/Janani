@@ -51,11 +51,11 @@ public interface APIInterface {
     Call<Root> CALL_API_Seller_Registration(@Part("name") RequestBody name,
                                             @Part("address") RequestBody company_address,
                                             @Part("phone") RequestBody mobile,
-                                            @Part("mailto") RequestBody email,
+                                            @Part("email") RequestBody email,
                                             @Part("password") RequestBody password,
                                             @Part MultipartBody.Part avatar,
                                             @Part MultipartBody.Part icon,
-                                            @Part("license_num ") RequestBody license_number,
+                                            @Part("license_num") RequestBody license_number,
                                             @Part("user_kit") RequestBody user_kit
     );
 
@@ -142,7 +142,7 @@ public interface APIInterface {
                                           @Part("mrp") RequestBody mrp,
                                           @Part("selling_price") RequestBody sellingPrice,
                                           @Part("qty") String quantity,
-                                          @Part("avatar") RequestBody image1,
+                                          @Part MultipartBody.Part image1,
                                           @Part MultipartBody.Part image2);
 
     @FormUrlEncoded

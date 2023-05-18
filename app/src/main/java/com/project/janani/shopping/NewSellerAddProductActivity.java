@@ -165,7 +165,6 @@ public class NewSellerAddProductActivity extends AppCompatActivity {
         RequestBody descriptionRb = RequestBody.create(MediaType.parse("text/plain"), productDescriptionEdittext.getText().toString());
         RequestBody mrpRb = RequestBody.create(MediaType.parse("text/plain"), productMrpEdittext.getText().toString());
         RequestBody sellingPriceRb = RequestBody.create(MediaType.parse("text/plain"), productSellingPriceEdittext.getText().toString());
-
         RequestBody image = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(selectedProductImageOne));
 
         MultipartBody.Part imageFileOneMultiPart = null;
@@ -173,17 +172,17 @@ public class NewSellerAddProductActivity extends AppCompatActivity {
 
         try {
 
-            imageFileOneMultiPart = MultipartBody.Part.createFormData("image", proImageFileProductImageOne.getName(),
+            imageFileOneMultiPart = MultipartBody.Part.createFormData("avatar", proImageFileProductImageOne.getName(),
                     RequestBody.create(MediaType.parse("image/*"), proImageFileProductImageOne));
-            imageFileTwoMultiPart = MultipartBody.Part.createFormData("image", proImageFileProductImageTwo.getName(),
+            imageFileTwoMultiPart = MultipartBody.Part.createFormData("icon", proImageFileProductImageTwo.getName(),
                     RequestBody.create(MediaType.parse("image/*"), proImageFileProductImageTwo));
         } catch (NullPointerException e) {
-            Toast.makeText(this, "Error!    " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error!  " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 
         APIInterface apiNewAddProduct = APIClient.getClient().create(APIInterface.class);
-        apiNewAddProduct.newAddProductSellerApiCall(sellerIdRB, productNameRb, categoryRb, descriptionRb, mrpRb, sellingPriceRb, "1", image, imageFileTwoMultiPart).enqueue(new Callback<Root>() {
+        apiNewAddProduct.newAddProductSellerApiCall(sellerIdRB, productNameRb, categoryRb, descriptionRb, mrpRb, sellingPriceRb, "1", imageFileOneMultiPart, imageFileTwoMultiPart).enqueue(new Callback<Root>() {
             @Override
             public void onResponse(Call<Root> call, Response<Root> response) {
                 Root root = response.body();

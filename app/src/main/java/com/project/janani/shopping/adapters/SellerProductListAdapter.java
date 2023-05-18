@@ -41,7 +41,7 @@ public class SellerProductListAdapter extends RecyclerView.Adapter<SellerProduct
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tvProductTitle.setText(root.product_details.get(position).name);
         Glide.with(context).load(root.product_details.get(position).image1).into(holder.ivProductImage);
-        holder.tvProductPrice.setText(root.product_details.get(position).mrp);
+        holder.tvProductPrice.setText(root.product_details.get(position).selling_price);
         holder.ratingBar.setVisibility(View.GONE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

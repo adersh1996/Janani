@@ -78,6 +78,7 @@ public class UserAccountFragment extends Fragment {
         initView(view);
         SharedPreferences loginSharedPreferences = getActivity().getSharedPreferences("loginShared", getActivity().MODE_PRIVATE);
         String userId = loginSharedPreferences.getString("userId", "default");
+        Toast.makeText(getContext(), userId, Toast.LENGTH_SHORT).show();
         viewUserAccount(userId);
         btEditAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -77,7 +77,7 @@ public class SelectAddressActivity extends AppCompatActivity {
                         Root root = response.body();
                         if (response.isSuccessful()) {
                             if (root.status) {
-                                Toast.makeText(SelectAddressActivity.this, root.message, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(SelectAddressActivity.this, root.message, Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SelectAddressActivity.this, UserHomeActivity.class));
                                 finishAffinity();
                             } else {

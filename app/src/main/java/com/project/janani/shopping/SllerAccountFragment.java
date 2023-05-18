@@ -81,6 +81,7 @@ public class SllerAccountFragment extends Fragment {
         initView(view);
         SharedPreferences loginSellerSharedPreferences = getActivity().getSharedPreferences("loginSellerShared", getActivity().MODE_PRIVATE);
         String sellerId = loginSellerSharedPreferences.getString("sellerId", "default");
+        //Toast.makeText(getContext(), sellerId, Toast.LENGTH_SHORT).show();
         viewSellerAccount(sellerId);
         btSellerEditAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +114,9 @@ public class SllerAccountFragment extends Fragment {
                         tvCompanyAddress.setText(root.userDetails.get(0).address);
                         tvEmailId.setText(root.userDetails.get(0).email);
                         tvLicenseNumber.setText(root.userDetails.get(0).license_num);
-                        if (("no").equals("yes")) {
+                        if ((root.userDetails.get(0).user_kit).equals("true")) {
                             tvUserKit.setText("UserKit feature is available");
-                        } else if (("no").equals("no")) {
+                        } else if ((root.userDetails.get(0).user_kit).equals("false")) {
                             tvUserKit.setText("UserKit feature is not available");
                         }
 

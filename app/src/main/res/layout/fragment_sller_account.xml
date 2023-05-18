@@ -118,7 +118,7 @@
                     android:layout_marginTop="10dp"
                     android:drawableLeft="@drawable/number"
                     android:drawablePadding="10dp"
-                    android:text="Your License Number"
+                    android:text="Password"
                     android:gravity="center_vertical"
                     android:paddingLeft="25dp"
                     android:paddingRight="10dp"
