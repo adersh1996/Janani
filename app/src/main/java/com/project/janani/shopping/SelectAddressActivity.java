@@ -71,7 +71,7 @@ public class SelectAddressActivity extends AppCompatActivity {
                 String cart_id = saveCartId.getString("select_cart_id", "default");
 
 
-                apiPlaceOrder.placeOrderAPiCall(user_id, user_name, user_address, user_pin_code, user_phone_number, user_city, user_state, "7").enqueue(new Callback<Root>() {
+                apiPlaceOrder.placeOrderAPiCall(user_id, user_name, user_address, user_pin_code, user_phone_number, user_city, user_state, cart_id).enqueue(new Callback<Root>() {
                     @Override
                     public void onResponse(Call<Root> call, Response<Root> response) {
                         Root root = response.body();

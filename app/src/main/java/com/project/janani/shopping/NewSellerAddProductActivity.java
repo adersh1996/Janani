@@ -119,7 +119,7 @@ public class NewSellerAddProductActivity extends AppCompatActivity {
 
                     selectedProductImageOne = data.getData();
                     final InputStream imageStream = getApplicationContext().getContentResolver().openInputStream(selectedProductImageOne);
-                    proImageFileProductImageOne = new File(getCacheDir(), "file_name");
+                    proImageFileProductImageOne = new File(getCacheDir(), String.valueOf(selectedProductImageOne));
                     OutputStream outputStream = new FileOutputStream(proImageFileProductImageOne);
 
                     byte[] buffer = new byte[1024];

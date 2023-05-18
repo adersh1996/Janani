@@ -2,10 +2,10 @@ package com.project.janani.shopping.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,9 +50,11 @@ public class DietChartAdapter extends RecyclerView.Adapter<DietChartAdapter.MyVi
             }
         });
         if (row_index == position) {
+            holder.rlDietChartLayout.setBackgroundResource(R.drawable.out_line_background_selected);
             holder.tvDescriptionDietChart.setVisibility(View.VISIBLE);
             holder.tvDescriptionDietChart.setText(root.dietDetails.get(position).description);
         } else {
+            holder.rlDietChartLayout.setBackgroundResource(R.drawable.out_line_background);
             holder.tvDescriptionDietChart.setVisibility(View.GONE);
         }
 
@@ -69,9 +71,9 @@ public class DietChartAdapter extends RecyclerView.Adapter<DietChartAdapter.MyVi
         private TextView tvTimeDietChart;
         private TextView tvDayDietChart;
         private TextView tvDescriptionDietChart;
-        private TextView tvDayDietChartTwo;
-        private TextView tvTimeDietChartTwo;
-        private TextView tvDescriptionDietChartTwo;
+        private RelativeLayout rlDietChartLayout;
+
+
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -79,9 +81,8 @@ public class DietChartAdapter extends RecyclerView.Adapter<DietChartAdapter.MyVi
             tvTimeDietChart = itemView.findViewById(R.id.tv_time_diet_chart);
             tvDayDietChart = itemView.findViewById(R.id.tv_day_diet_chart);
             tvDescriptionDietChart = itemView.findViewById(R.id.tv_description_diet_chart);
-//            tvDayDietChartTwo = itemView.findViewById(R.id.tv_day_diet_chart_two);
-//            tvTimeDietChartTwo = itemView.findViewById(R.id.tv_time_diet_chart_two);
-//            tvDescriptionDietChartTwo = itemView.findViewById(R.id.tv_description_diet_chart_two);
+            rlDietChartLayout = itemView.findViewById(R.id.rl_diet_chart_layout);
+
         }
     }
 }
