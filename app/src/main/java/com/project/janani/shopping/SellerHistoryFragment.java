@@ -56,7 +56,7 @@ public class SellerHistoryFragment extends Fragment {
                         SellerOrderHistoryAdapter sellerOrderHistoryAdapter = new SellerOrderHistoryAdapter(getActivity(), root);
                         sellerOrderHistoryRecyclerView.setAdapter(sellerOrderHistoryAdapter);
                     } else {
-                        Toast.makeText(getActivity(), "Error!"+root.message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "No Order History", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Not Successful!", Toast.LENGTH_SHORT).show();

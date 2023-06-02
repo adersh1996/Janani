@@ -81,7 +81,10 @@ public class SllerAccountFragment extends Fragment {
         initView(view);
         SharedPreferences loginSellerSharedPreferences = getActivity().getSharedPreferences("loginSellerShared", getActivity().MODE_PRIVATE);
         String sellerId = loginSellerSharedPreferences.getString("sellerId", "default");
-        //Toast.makeText(getContext(), sellerId, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getContext(), sellerId, Toast.LENGTH_SHORT).show();
+        //32
+
         viewSellerAccount(sellerId);
         btSellerEditAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override

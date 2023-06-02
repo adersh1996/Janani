@@ -13,7 +13,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="50dp">
 
             <TextView
                 android:id="@+id/tv_payment_activity_heading"
@@ -107,9 +108,9 @@
                             android:layout_below="@id/rb_card_select"
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="10dp"
-                            android:inputType="number"
                             android:background="@drawable/view_background"
                             android:hint="Enter your card number"
+                            android:inputType="number"
                             android:paddingLeft="20dp" />
 
                         <EditText

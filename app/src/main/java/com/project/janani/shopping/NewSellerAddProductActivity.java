@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -119,7 +120,7 @@ public class NewSellerAddProductActivity extends AppCompatActivity {
 
                     selectedProductImageOne = data.getData();
                     final InputStream imageStream = getApplicationContext().getContentResolver().openInputStream(selectedProductImageOne);
-                    proImageFileProductImageOne = new File(getCacheDir(), String.valueOf(selectedProductImageOne));
+                    proImageFileProductImageOne = new File(getCacheDir(),"file_name_one");
                     OutputStream outputStream = new FileOutputStream(proImageFileProductImageOne);
 
                     byte[] buffer = new byte[1024];
@@ -144,12 +145,12 @@ public class NewSellerAddProductActivity extends AppCompatActivity {
                     }
                     outputStream1.close();
                     imageStream1.close();
-                    Toast.makeText(this, "reached4", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, "reached4", Toast.LENGTH_SHORT).show();
                 }
 
 
             } catch (Exception e) {
-                Toast.makeText(this, "Error!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "Error!" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -177,7 +178,7 @@ public class NewSellerAddProductActivity extends AppCompatActivity {
             imageFileTwoMultiPart = MultipartBody.Part.createFormData("icon", proImageFileProductImageTwo.getName(),
                     RequestBody.create(MediaType.parse("image/*"), proImageFileProductImageTwo));
         } catch (NullPointerException e) {
-            Toast.makeText(this, "Error!  " + e.getMessage(), Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Error!  " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -200,6 +201,7 @@ public class NewSellerAddProductActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Root> call, Throwable t) {
                 Toast.makeText(NewSellerAddProductActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("er_msg",t.getMessage());
             }
         });
     }
